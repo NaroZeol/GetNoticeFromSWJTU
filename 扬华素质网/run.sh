@@ -1,27 +1,23 @@
 #!/bin/bash
+if (($# == 0)); then
+    num=3
+else
+    num=$1
+fi
+
+if ((num <= 0)); then
+    return 0
+fi
+
 curl -s http://xg.swjtu.edu.cn/web/Home/PushNewsList?Lmk7LJw34Jmu=010j.shtml > __notice__.html
-if (($? != 0)); then
-    echo "获取网页信息失败"
-    return 1
-fi
-    echo "已获取网页信息"
-    
-cat __notice__.html | grep h4 -m 1 | ./markrm.o | grep '\S' |  sed 's/^[ \t]*//'  > msg.txt
-if (($? != 0)); then
-    echo "获取通知链接失败"
-    return 1
-fi
-    echo "已获取通知链接"
 
-cat  __notice__.html | grep -m 1 "h4" | ./webfix.o >> msg.txt
-if (($? != 0)); then
-    echo "获取通知标题失败"
-    return 1
-fi
-    echo "已获取通知标题"
+cat /dev/null > msg.txt
 
+for ((i=1; i<= num; i++))
+do
+    grep "h4" __notice__.html | sed -n  "$((i))p" | ./markrm.o | grep '\S' | sed 's/^[ \t]*//' >> msg.txt
+    grep "h4" __notice__.html | sed -n  "$((i))p" | ./webfix.o >> msg.txt
+done
 
-echo ' '
-cat msg.txt
- 
 rm __notice__.html
+cat msg.txt
