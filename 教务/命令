@@ -1,2 +1,0 @@
-cat notice.html | grep -m 1 --after-context=2 "list-top-item" | ./markrm.o | grep '\S' | sed 's/^[ \t]*//' > msg.txt
-cat notice.html | grep -m 1 --after-context=2 "list-top-item" | ./webfix.o >> msg.txt
