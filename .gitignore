@@ -1,2 +1,11 @@
 *.o
-*/msg.txt
+msg.txt
+
+.vs/
+.vscode/
+
+bin/
+obj/
+Debug/
+Release/
+Properties/
