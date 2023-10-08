@@ -5,6 +5,8 @@ development.txt
 
 .vs/
 .vscode/
+.github/
+.git/
 
 bin/
 obj/
