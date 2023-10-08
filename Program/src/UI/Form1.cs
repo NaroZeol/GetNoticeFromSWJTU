@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using System.Reflection;
+using System.Xml;
 using MainFunction;
 
 namespace WinFormsApp1
@@ -22,8 +23,19 @@ namespace WinFormsApp1
                 await Task.Delay(100);
             }
 
+            FileStream file = new FileStream("JWC.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+
+            string oldText = FileData.ReadFromFile(file);
+            string diff = FileData.CheckDiff(task.Result, file);
+
+            richTextBox1.Clear();
+            richTextBox1.AppendTextColorful(diff, Color.Red, 2);
+            richTextBox1.AppendTextColorful(oldText, Color.Black, 1);
+            
+            FileData.WriteToFile(task.Result, file);
+            file.Close();
+
             button1.Text = "教务处";
-            richTextBox1.Text = task.Result;
         }
 
         private async void Button2_Click(object sender, EventArgs e)
@@ -37,9 +49,19 @@ namespace WinFormsApp1
                 button2.Text = LoadingSymbol[i++ % LoadingSymbol.Length].ToString();
                 await Task.Delay(100);
             }
+            FileStream file = new FileStream("SCAI.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+
+            string oldText = FileData.ReadFromFile(file);
+            string diff = FileData.CheckDiff(task.Result, file);
+
+            richTextBox1.Clear();
+            richTextBox1.AppendTextColorful(diff, Color.Red, 2);
+            richTextBox1.AppendTextColorful(oldText, Color.Black, 1);
+
+            FileData.WriteToFile(task.Result, file);
+            file.Close();
 
             button2.Text = "计院";
-            richTextBox1.Text = task.Result;
         }
 
         private void ExitProgram(object sender, EventArgs e)
@@ -71,12 +93,12 @@ namespace WinFormsApp1
         {
         }
 
-        private void richTextBox1_LinkClicked(object sender, LinkClickedEventArgs e)
+        private void RichTextBox1_LinkClicked(object sender, LinkClickedEventArgs e)
         {
             if (e.LinkText is not null)
             {
                 string url = e.LinkText;
-                ProcessStartInfo info = new ProcessStartInfo()
+                System.Diagnostics.ProcessStartInfo info = new()
                 {
                     FileName = url,
                     UseShellExecute = true

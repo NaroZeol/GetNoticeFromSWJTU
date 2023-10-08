@@ -1,5 +1,4 @@
-﻿using System.IO;
-namespace MainFunction;
+﻿namespace MainFunction;
 public static class FileData
 {
     public static void WriteToFile(string text, FileStream file)
@@ -14,7 +13,9 @@ public static class FileData
     public static string ReadFromFile(FileStream file)
     {
         StreamReader sr = new(file);
-        return sr.ReadToEnd();
+        string ret = sr.ReadToEnd();
+        file.Seek(0, SeekOrigin.Begin);
+        return ret;
     }
 
     public static string CheckDiff(string text, FileStream file)
@@ -23,8 +24,20 @@ public static class FileData
         IEnumerable<string> newText = text.Split('\n');
         IEnumerable<string> oldTexts = oldText.Split('\n');
 
-        IEnumerable<string> diff = newText.Except(oldTexts);
+        newText = newText.Except(oldTexts);
 
-        return string.Join('\n', diff);
+        string ret = "";
+
+        foreach (string line in newText)
+        {
+            if (line.StartsWith("链接: "))
+            {
+                ret += line + "\n\n";
+                continue;
+            }
+            ret += line + "\n";
+        }
+
+        return ret.TrimEnd();
     }
 }

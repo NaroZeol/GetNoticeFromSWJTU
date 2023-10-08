@@ -92,7 +92,7 @@
             richTextBox1.Size = new Size(1270, 528);
             richTextBox1.TabIndex = 3;
             richTextBox1.Text = "";
-            richTextBox1.LinkClicked += richTextBox1_LinkClicked;
+            richTextBox1.LinkClicked += RichTextBox1_LinkClicked;
             // 
             // Form1
             // 
