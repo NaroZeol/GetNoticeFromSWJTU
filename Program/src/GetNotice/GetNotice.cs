@@ -1,7 +1,7 @@
 using HtmlAgilityPack;
 
 namespace MainFunction;
-public static class Notice
+public static class GetNotice
 {
     public async static Task<string> GetNoticeFromJWCAsync()
     {
@@ -16,9 +16,9 @@ public static class Notice
         {
             string link = node.SelectSingleNode(".//a").Attributes["href"].Value;
             string title = node.SelectSingleNode(".//a").InnerText;
-            result += "标题: " + title + "\r" + "\n";
-            result += "链接: " + baseUrl + link[3..] + "\r" + "\n";
-            result += "\r" + "\n";
+            result += "标题: " + title + "\n";
+            result += "链接: " + baseUrl + link[3..] + "\n";
+            result +=  "\n";
         }
 
         return result;
