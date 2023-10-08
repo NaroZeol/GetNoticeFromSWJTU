@@ -34,6 +34,7 @@
             button2 = new Button();
             NoticeIcon = new NotifyIcon(components);
             NoticeMenu = new ContextMenuStrip(components);
+            OpenWindowMenuBottom = new ToolStripMenuItem();
             ExitMenuBotton = new ToolStripMenuItem();
             richTextBox1 = new RichTextBox();
             NoticeMenu.SuspendLayout();
@@ -73,9 +74,16 @@
             // NoticeMenu
             // 
             NoticeMenu.ImageScalingSize = new Size(20, 20);
-            NoticeMenu.Items.AddRange(new ToolStripItem[] { ExitMenuBotton });
+            NoticeMenu.Items.AddRange(new ToolStripItem[] { OpenWindowMenuBottom, ExitMenuBotton });
             NoticeMenu.Name = "contextMenuStrip1";
-            NoticeMenu.Size = new Size(101, 26);
+            NoticeMenu.Size = new Size(101, 48);
+            // 
+            // OpenWindowMenuBottom
+            // 
+            OpenWindowMenuBottom.Name = "OpenWindowMenuBottom";
+            OpenWindowMenuBottom.Size = new Size(100, 22);
+            OpenWindowMenuBottom.Text = "打开";
+            OpenWindowMenuBottom.Click += OpenWindowMenuBottom_Click;
             // 
             // ExitMenuBotton
             // 
@@ -86,10 +94,12 @@
             // 
             // richTextBox1
             // 
+            richTextBox1.BorderStyle = BorderStyle.None;
             richTextBox1.Font = new Font("Microsoft YaHei UI", 15F, FontStyle.Regular, GraphicsUnit.Point);
-            richTextBox1.Location = new Point(6, 5);
+            richTextBox1.Location = new Point(6, 12);
             richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(1270, 528);
+            richTextBox1.ReadOnly = true;
+            richTextBox1.Size = new Size(1270, 521);
             richTextBox1.TabIndex = 3;
             richTextBox1.Text = "";
             richTextBox1.LinkClicked += RichTextBox1_LinkClicked;
@@ -98,12 +108,16 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoSize = true;
             ClientSize = new Size(1288, 619);
             Controls.Add(richTextBox1);
             Controls.Add(button2);
             Controls.Add(button1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Name = "Form1";
             Text = "Form1";
+            TransparencyKey = Color.White;
             FormClosing += Form1_FormClosing;
             NoticeMenu.ResumeLayout(false);
             ResumeLayout(false);
@@ -117,5 +131,6 @@
         private ContextMenuStrip NoticeMenu;
         private ToolStripMenuItem ExitMenuBotton;
         private RichTextBox richTextBox1;
+        private ToolStripMenuItem OpenWindowMenuBottom;
     }
 }

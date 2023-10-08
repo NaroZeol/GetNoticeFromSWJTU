@@ -13,7 +13,7 @@ namespace WinFormsApp1
         {
             string? proGramName = Assembly.GetExecutingAssembly().GetName().Name;
 
-            using Mutex mutex = new Mutex(false, proGramName, out bool createdNew);
+            using Mutex mutex = new(false, proGramName, out bool createdNew);
             if (!createdNew)
             {
                 return;

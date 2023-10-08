@@ -23,7 +23,7 @@ namespace WinFormsApp1
                 await Task.Delay(100);
             }
 
-            FileStream file = new FileStream("JWC.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            FileStream file = new("JWC.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
             string oldText = FileData.ReadFromFile(file);
             string diff = FileData.CheckDiff(task.Result, file);
@@ -31,7 +31,7 @@ namespace WinFormsApp1
             richTextBox1.Clear();
             richTextBox1.AppendTextColorful(diff, Color.Red, 2);
             richTextBox1.AppendTextColorful(oldText, Color.Black, 1);
-            
+
             FileData.WriteToFile(task.Result, file);
             file.Close();
 
@@ -49,7 +49,7 @@ namespace WinFormsApp1
                 button2.Text = LoadingSymbol[i++ % LoadingSymbol.Length].ToString();
                 await Task.Delay(100);
             }
-            FileStream file = new FileStream("SCAI.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            FileStream file = new("SCAI.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
             string oldText = FileData.ReadFromFile(file);
             string diff = FileData.CheckDiff(task.Result, file);
@@ -105,6 +105,12 @@ namespace WinFormsApp1
                 };
                 System.Diagnostics.Process.Start(info);
             }
+        }
+
+        private void OpenWindowMenuBottom_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Normal;
+            this.ShowInTaskbar = true;
         }
     }
 }
