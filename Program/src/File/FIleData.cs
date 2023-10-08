@@ -23,6 +23,10 @@ public static class FileData
     public static string CheckDiff(string text, FileStream file)
     {
         string oldText = ReadFromFile(file);
+        if (oldText.Length == 0)
+        {
+            return text;
+        }
         List<string> newTextList = text.Split('\n').ToList();
         List<string> oldTextList = oldText.Split('\n').ToList();
         

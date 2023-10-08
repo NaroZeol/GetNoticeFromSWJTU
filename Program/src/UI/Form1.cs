@@ -13,6 +13,8 @@ namespace WinFormsApp1
 
         private async void Button1_Click(object sender, EventArgs e)
         {
+            button1.Enabled = false;
+            this.ActiveControl = null;
             string LoadingSymbol = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏";
             int i = 0;
             Task<string> task = GetNotice.GetNoticeFromJWCAsync();
@@ -31,15 +33,21 @@ namespace WinFormsApp1
             richTextBox1.Clear();
             richTextBox1.AppendTextColorful(diff, Color.Red, 2);
             richTextBox1.AppendTextColorful(oldText, Color.Black, 1);
+            richTextBox1.SelectionStart = 0;
+            richTextBox1.ScrollToCaret();
 
             FileData.WriteToFile(task.Result, file);
             file.Close();
 
             button1.Text = "教务处";
+            button1.Enabled = true;
+            button1.Focus();
         }
 
         private async void Button2_Click(object sender, EventArgs e)
         {
+            button2.Enabled = false;
+            this.ActiveControl = null;
             string LoadingSymbol = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏";
             int i = 0;
             Task<string> task = GetNotice.GetNoticeFromSCAIAsync();
@@ -57,11 +65,15 @@ namespace WinFormsApp1
             richTextBox1.Clear();
             richTextBox1.AppendTextColorful(diff, Color.Red, 2);
             richTextBox1.AppendTextColorful(oldText, Color.Black, 1);
+            richTextBox1.SelectionStart = 0;
+            richTextBox1.ScrollToCaret();
 
             FileData.WriteToFile(task.Result, file);
             file.Close();
 
             button2.Text = "计院";
+            button2.Enabled = true;
+            button2.Focus();
         }
 
         private void ExitProgram(object sender, EventArgs e)
@@ -72,14 +84,12 @@ namespace WinFormsApp1
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // 取消关闭窗体
             e.Cancel = true;
-            // 将窗体变为最小化
+
             this.WindowState = FormWindowState.Minimized;
 
-            //隐藏任务栏区图标
             this.ShowInTaskbar = false;
-            //图标显示在托盘区
+
             NoticeIcon.Visible = true;
         }
 
