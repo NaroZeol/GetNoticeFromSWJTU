@@ -28,9 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             button1 = new Button();
-            textBox1 = new TextBox();
             button2 = new Button();
+            NoticeIcon = new NotifyIcon(components);
+            NoticeMenu = new ContextMenuStrip(components);
+            ExitMenuBotton = new ToolStripMenuItem();
+            richTextBox1 = new RichTextBox();
+            NoticeMenu.SuspendLayout();
             SuspendLayout();
             // 
             // button1
@@ -44,18 +50,6 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += Button1_Click;
             // 
-            // textBox1
-            // 
-            textBox1.AcceptsReturn = true;
-            textBox1.Font = new Font("Microsoft YaHei UI", 15F, FontStyle.Regular, GraphicsUnit.Point);
-            textBox1.Location = new Point(12, 12);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.ReadOnly = true;
-            textBox1.ScrollBars = ScrollBars.Vertical;
-            textBox1.Size = new Size(1264, 521);
-            textBox1.TabIndex = 1;
-            // 
             // button2
             // 
             button2.Font = new Font("Microsoft YaHei UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
@@ -67,24 +61,61 @@
             button2.UseVisualStyleBackColor = true;
             button2.Click += Button2_Click;
             // 
+            // NoticeIcon
+            // 
+            NoticeIcon.ContextMenuStrip = NoticeMenu;
+            NoticeIcon.Icon = (Icon)resources.GetObject("NoticeIcon.Icon");
+            NoticeIcon.Text = "Notice";
+            NoticeIcon.Visible = true;
+            NoticeIcon.Click += NoticeIconSingleClick;
+            NoticeIcon.MouseDoubleClick += NoticeIconDoubleClick;
+            // 
+            // NoticeMenu
+            // 
+            NoticeMenu.ImageScalingSize = new Size(20, 20);
+            NoticeMenu.Items.AddRange(new ToolStripItem[] { ExitMenuBotton });
+            NoticeMenu.Name = "contextMenuStrip1";
+            NoticeMenu.Size = new Size(101, 26);
+            // 
+            // ExitMenuBotton
+            // 
+            ExitMenuBotton.Name = "ExitMenuBotton";
+            ExitMenuBotton.Size = new Size(100, 22);
+            ExitMenuBotton.Text = "退出";
+            ExitMenuBotton.Click += ExitProgram;
+            // 
+            // richTextBox1
+            // 
+            richTextBox1.Font = new Font("Microsoft YaHei UI", 15F, FontStyle.Regular, GraphicsUnit.Point);
+            richTextBox1.Location = new Point(6, 5);
+            richTextBox1.Name = "richTextBox1";
+            richTextBox1.Size = new Size(1270, 528);
+            richTextBox1.TabIndex = 3;
+            richTextBox1.Text = "";
+            richTextBox1.LinkClicked += richTextBox1_LinkClicked;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1288, 619);
+            Controls.Add(richTextBox1);
             Controls.Add(button2);
-            Controls.Add(textBox1);
             Controls.Add(button1);
             Name = "Form1";
             Text = "Form1";
+            FormClosing += Form1_FormClosing;
+            NoticeMenu.ResumeLayout(false);
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
         private Button button1;
-        private TextBox textBox1;
         private Button button2;
+        private NotifyIcon NoticeIcon;
+        private ContextMenuStrip NoticeMenu;
+        private ToolStripMenuItem ExitMenuBotton;
+        private RichTextBox richTextBox1;
     }
 }

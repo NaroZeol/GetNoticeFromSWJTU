@@ -14,7 +14,7 @@ namespace WinFormsApp1
         {
             string LoadingSymbol = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏";
             int i = 0;
-            Task<string> task = Notice.GetNoticeFromJWCAsync();
+            Task<string> task = GetNotice.GetNoticeFromJWCAsync();
 
             while (!task.IsCompleted)
             {
@@ -23,14 +23,14 @@ namespace WinFormsApp1
             }
 
             button1.Text = "教务处";
-            textBox1.Text = task.Result;
+            richTextBox1.Text = task.Result;
         }
 
         private async void Button2_Click(object sender, EventArgs e)
         {
             string LoadingSymbol = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏";
             int i = 0;
-            Task<string> task = Notice.GetNoticeFromSCAIAsync();
+            Task<string> task = GetNotice.GetNoticeFromSCAIAsync();
 
             while (!task.IsCompleted)
             {
@@ -39,7 +39,50 @@ namespace WinFormsApp1
             }
 
             button2.Text = "计院";
-            textBox1.Text = task.Result;
+            richTextBox1.Text = task.Result;
+        }
+
+        private void ExitProgram(object sender, EventArgs e)
+        {
+            this.Dispose();
+            Environment.Exit(0);
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // 取消关闭窗体
+            e.Cancel = true;
+            // 将窗体变为最小化
+            this.WindowState = FormWindowState.Minimized;
+
+            //隐藏任务栏区图标
+            this.ShowInTaskbar = false;
+            //图标显示在托盘区
+            NoticeIcon.Visible = true;
+        }
+
+        private void NoticeIconDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.WindowState = FormWindowState.Normal;
+            this.ShowInTaskbar = true;
+        }
+
+        private void NoticeIconSingleClick(object sender, EventArgs e)
+        {
+        }
+
+        private void richTextBox1_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            if (e.LinkText is not null)
+            {
+                string url = e.LinkText;
+                ProcessStartInfo info = new ProcessStartInfo()
+                {
+                    FileName = url,
+                    UseShellExecute = true
+                };
+                System.Diagnostics.Process.Start(info);
+            }
         }
     }
 }

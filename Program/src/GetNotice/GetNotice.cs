@@ -1,7 +1,7 @@
 using HtmlAgilityPack;
 
 namespace MainFunction;
-public static class Notice
+public static class GetNotice
 {
     public async static Task<string> GetNoticeFromJWCAsync()
     {
