@@ -1,8 +1,12 @@
 *.o
+*.exe
 msg.txt
+development.txt
 
 .vs/
 .vscode/
+.github/
+.git/
 
 bin/
 obj/

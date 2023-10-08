@@ -47,9 +47,9 @@ public static class GetNotice
         {
             string link = node.SelectSingleNode(".//a").Attributes["href"].Value;
             string title = node.SelectSingleNode(".//a").InnerText;
-            result += "标题: " + title + "\r" + "\n";
-            result += "链接: " + baseUrl + link[3..] + "\r" + "\n";
-            result += "\r" + "\n";
+            result += "标题: " + title + "\n";
+            result += "链接: " + baseUrl + link[3..] + "\n";
+            result += "\n";
         }
 
         return result;
