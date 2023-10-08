@@ -1,4 +1,6 @@
-﻿namespace MainFunction;
+﻿using System.Linq;
+
+namespace MainFunction;
 public static class FileData
 {
     public static void WriteToFile(string text, FileStream file)
@@ -21,21 +23,25 @@ public static class FileData
     public static string CheckDiff(string text, FileStream file)
     {
         string oldText = ReadFromFile(file);
-        IEnumerable<string> newText = text.Split('\n');
-        IEnumerable<string> oldTexts = oldText.Split('\n');
-
-        newText = newText.Except(oldTexts);
-
+        List<string> newTextList = text.Split('\n').ToList();
+        List<string> oldTextList = oldText.Split('\n').ToList();
+        
         string ret = "";
+        int indexOfNewText = 0;
+        int indexOfOldText = 0;
 
-        foreach (string line in newText)
+        while (indexOfNewText < newTextList.Count && indexOfOldText < oldTextList.Count)
         {
-            if (line.StartsWith("链接: "))
+            if (newTextList[indexOfNewText] == oldTextList[indexOfOldText])
             {
-                ret += line + "\n\n";
-                continue;
+                indexOfNewText++;
+                indexOfOldText++;
             }
-            ret += line + "\n";
+            else
+            {
+                ret += newTextList[indexOfNewText] + "\n";
+                indexOfNewText++;
+            }
         }
 
         return ret.TrimEnd();
