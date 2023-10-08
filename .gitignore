@@ -1,5 +1,7 @@
 *.o
+*.exe
 msg.txt
+development.txt
 
 .vs/
 .vscode/
