@@ -9,6 +9,11 @@ namespace WinFormsApp1
         public Form1()
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Minimized;
+
+            this.ShowInTaskbar = false;
+
+            NoticeIcon.Visible = true;
         }
 
         private async void Button1_Click(object sender, EventArgs e)
@@ -93,14 +98,35 @@ namespace WinFormsApp1
             NoticeIcon.Visible = true;
         }
 
-        private void NoticeIconDoubleClick(object sender, MouseEventArgs e)
+        private void NoticeIcon_MouseClick(object sender, MouseEventArgs e)
         {
-            this.WindowState = FormWindowState.Normal;
-            this.ShowInTaskbar = true;
+            if (e.Button == MouseButtons.Right)
+            {
+                NoticeMenu.Show();
+            }
+            else
+            {
+                this.WindowState = FormWindowState.Normal;
+                this.ShowInTaskbar = true;
+            }
         }
 
-        private void NoticeIconSingleClick(object sender, EventArgs e)
+        private readonly Icon icon1 = global::Program.Properties.Resources.Normal;
+        private readonly Icon icon2 = global::Program.Properties.Resources.OnNotify;
+        private bool Timer1flag = true;
+
+        private void Timer1_Tick(object sender, EventArgs e)
         {
+            if (Timer1flag)
+            {
+                NoticeIcon.Icon = icon2;
+                Timer1flag = false;
+            }
+            else
+            {
+                NoticeIcon.Icon = icon1;
+                Timer1flag = true;
+            }
         }
 
         private void RichTextBox1_LinkClicked(object sender, LinkClickedEventArgs e)
@@ -121,6 +147,63 @@ namespace WinFormsApp1
         {
             this.WindowState = FormWindowState.Normal;
             this.ShowInTaskbar = true;
+        }
+
+        private async void TimerOfAutoRunning_Tick(object sender, EventArgs e)
+        {
+            if (global::Program.Utilities.CheckNetwork.IsNetworkConnected == false)
+            {
+                timerOfFlashingButton.Enabled = false;
+                NoticeIcon.Icon = icon1;
+                return;
+            }
+            Task<string> task1 = GetNotice.GetNoticeFromJWCAsync();
+            Task<string> task2 = GetNotice.GetNoticeFromSCAIAsync();
+
+            await Task.WhenAll(task1, task2);
+
+            FileStream file1 = new("JWC.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            FileStream file2 = new("SCAI.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+
+            string diff1 = FileData.CheckDiff(task1.Result, file1);
+            string diff2 = FileData.CheckDiff(task2.Result, file2);
+
+            if (diff1.Length > 0 || diff2.Length > 0)
+            {
+                timerOfFlashingButton.Enabled = true;
+                NoticeSourceIndex = 0;
+
+                if (diff1.Length > 0)
+                    NoticeSourceIndex |= 1;
+                if (diff2.Length > 0)
+                    NoticeSourceIndex |= 2;
+            }
+
+            file1.Close();
+            file2.Close();
+        }
+
+        private int NoticeSourceIndex = 0;
+
+        private void NoticeIcon_Move(object sender, MouseEventArgs e)
+        {
+            if (timerOfFlashingButton.Enabled == true)
+            {
+                timerOfFlashingButton.Enabled = false;
+                NoticeIcon.Icon = icon1;
+                string msg = "有新的通知";
+                if ((NoticeSourceIndex & 0x01) == 1)
+                    msg = "教务网" + msg;
+                if ((NoticeSourceIndex & 0x02) == 2)
+                    msg = "计院" + msg;
+
+                NoticeIcon.ShowBalloonTip(1000, "通知", msg, ToolTipIcon.Info);
+            }
+        }
+
+        private void NoticeIcon_BalloonTipClicked(object sender, EventArgs e)
+        {
+            OpenWindowMenuBottom_Click(sender, e);
         }
     }
 }

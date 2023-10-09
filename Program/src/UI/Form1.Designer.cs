@@ -37,6 +37,8 @@
             OpenWindowMenuBotton = new ToolStripMenuItem();
             ExitMenuBotton = new ToolStripMenuItem();
             richTextBox1 = new RichTextBox();
+            timerOfFlashingButton = new System.Windows.Forms.Timer(components);
+            timerOfAutoRunning = new System.Windows.Forms.Timer(components);
             NoticeMenu.SuspendLayout();
             SuspendLayout();
             // 
@@ -65,11 +67,12 @@
             // NoticeIcon
             // 
             NoticeIcon.ContextMenuStrip = NoticeMenu;
-            NoticeIcon.Icon = (Icon)resources.GetObject("NoticeIcon.Icon");
-            NoticeIcon.Text = "Notice";
+            NoticeIcon.Icon = global::Program.Properties.Resources.Normal;
+            NoticeIcon.Text = "GetNoticeFromSWJTU";
             NoticeIcon.Visible = true;
-            NoticeIcon.Click += NoticeIconSingleClick;
-            NoticeIcon.MouseDoubleClick += NoticeIconDoubleClick;
+            NoticeIcon.BalloonTipClicked += NoticeIcon_BalloonTipClicked;
+            NoticeIcon.MouseClick += NoticeIcon_MouseClick;
+            NoticeIcon.MouseMove += NoticeIcon_Move;
             // 
             // NoticeMenu
             // 
@@ -105,6 +108,17 @@
             richTextBox1.Text = "";
             richTextBox1.LinkClicked += RichTextBox1_LinkClicked;
             // 
+            // timerOfFlashingButton
+            // 
+            timerOfFlashingButton.Interval = 1000;
+            timerOfFlashingButton.Tick += Timer1_Tick;
+            // 
+            // timerOfAutoRunning
+            // 
+            timerOfAutoRunning.Enabled = true;
+            timerOfAutoRunning.Interval = 120000;//2min
+            timerOfAutoRunning.Tick += TimerOfAutoRunning_Tick;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -117,9 +131,10 @@
             Controls.Add(button2);
             Controls.Add(button1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "Form1";
-            Text = "Form1";
+            Text = "GetNoticeFromSWJTU";
             TransparencyKey = Color.Transparent;
             FormClosing += Form1_FormClosing;
             NoticeMenu.ResumeLayout(false);
@@ -135,5 +150,7 @@
         private ToolStripMenuItem ExitMenuBotton;
         private RichTextBox richTextBox1;
         private ToolStripMenuItem OpenWindowMenuBotton;
+        private System.Windows.Forms.Timer timerOfFlashingButton;
+        private System.Windows.Forms.Timer timerOfAutoRunning;
     }
 }
