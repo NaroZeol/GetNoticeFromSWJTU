@@ -1,4 +1,4 @@
-using HtmlAgilityPack;
+锘縰sing HtmlAgilityPack;
 
 namespace MainFunction;
 public static class GetNotice
@@ -16,8 +16,8 @@ public static class GetNotice
         {
             string link = node.SelectSingleNode(".//a").Attributes["href"].Value;
             string title = node.SelectSingleNode(".//a").InnerText;
-            result += "标题: " + title + "\n";
-            result += "链接: " + baseUrl + link[3..] + "\n";
+            result += "鏍囬: " + title + "\n";
+            result += "閾炬帴: " + baseUrl + link[3..] + "\n";
             result +=  "\n";
         }
 
@@ -47,8 +47,29 @@ public static class GetNotice
         {
             string link = node.SelectSingleNode(".//a").Attributes["href"].Value;
             string title = node.SelectSingleNode(".//a").InnerText;
-            result += "标题: " + title + "\n";
-            result += "链接: " + baseUrl + link[3..] + "\n";
+            result += "鏍囬: " + title + "\n";
+            result += "閾炬帴: " + baseUrl + link[3..] + "\n";
+            result += "\n";
+        }
+
+        return result;
+    }
+
+    public async static Task<string> GetNoticeFromXGBAsync()
+    {
+        HtmlWeb web = new();
+        HtmlAgilityPack.HtmlDocument doc = await web.LoadFromWebAsync("http://xg.swjtu.edu.cn/web/Home/PushNewsList?Lmk7LJw34Jmu=010j.shtml");
+        HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='right-side']//ul[@class='block-ctxlist']//li");
+
+        string baseUrl = "http://xg.swjtu.edu.cn/";
+
+        string result = "";
+        foreach (HtmlNode node in nodes)
+        {
+            string link = node.SelectSingleNode(".//a").Attributes["href"].Value;
+            string title = node.SelectSingleNode(".//a").InnerText;
+            result += "鏍囬: " + title + "\n";
+            result += "閾炬帴: " + baseUrl + link + "\n";
             result += "\n";
         }
 
