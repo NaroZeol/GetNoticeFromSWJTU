@@ -33,7 +33,7 @@ namespace WinFormsApp1
             FileStream file = new("JWC.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
             string oldText = FileData.ReadFromFile(file);
-            string diff = FileData.CheckDiff(task.Result, file);
+            string diff = FileData.CheckDiff(task.Result, oldText);
 
             richTextBox1.Clear();
             richTextBox1.AppendTextColorful(diff, Color.Red, 2);
@@ -65,7 +65,7 @@ namespace WinFormsApp1
             FileStream file = new("SCAI.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
             string oldText = FileData.ReadFromFile(file);
-            string diff = FileData.CheckDiff(task.Result, file);
+            string diff = FileData.CheckDiff(task.Result, oldText);
 
             richTextBox1.Clear();
             richTextBox1.AppendTextColorful(diff, Color.Red, 2);
@@ -97,7 +97,7 @@ namespace WinFormsApp1
             FileStream file = new("XGB.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
             string oldText = FileData.ReadFromFile(file);
-            string diff = FileData.CheckDiff(task.Result, file);
+            string diff = FileData.CheckDiff(task.Result, oldText);
 
             richTextBox1.Clear();
             richTextBox1.AppendTextColorful(diff, Color.Red, 2);
@@ -199,9 +199,13 @@ namespace WinFormsApp1
             FileStream file2 = new("SCAI.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
             FileStream file3 = new("XGB.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
-            string diff1 = FileData.CheckDiff(task1.Result, file1);
-            string diff2 = FileData.CheckDiff(task2.Result, file2);
-            string diff3 = FileData.CheckDiff(task3.Result, file3);
+            string oldText1 = FileData.ReadFromFile(file1);
+            string oldText2 = FileData.ReadFromFile(file2);
+            string oldText3 = FileData.ReadFromFile(file3);
+
+            string diff1 = FileData.CheckDiff(task1.Result, oldText1);
+            string diff2 = FileData.CheckDiff(task2.Result, oldText2);
+            string diff3 = FileData.CheckDiff(task3.Result, oldText3);
 
             if (diff1.Length > 0 || diff2.Length > 0 || diff3.Length > 0)
             {
