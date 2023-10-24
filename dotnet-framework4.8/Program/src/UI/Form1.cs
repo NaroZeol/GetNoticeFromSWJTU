@@ -18,7 +18,10 @@ namespace WindowsFormsApp2
 
             NoticeIcon.Visible = true;
         }
-
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            this.Hide();
+        }
         private async void Button1_Click(object sender, EventArgs e)
         {
             button1.Enabled = false;
@@ -262,6 +265,5 @@ namespace WindowsFormsApp2
         {
             OpenWindowMenuBottom_Click(sender, e);
         }
-
     }
 }

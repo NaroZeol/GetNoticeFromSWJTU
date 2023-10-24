@@ -161,6 +161,7 @@ namespace WindowsFormsApp2
             this.Text = "GetNoticeFromSWJTU";
             this.TransparencyKey = System.Drawing.Color.Transparent;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.NoticeMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
