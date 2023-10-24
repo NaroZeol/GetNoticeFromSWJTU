@@ -5,7 +5,7 @@ using MainFunction;
 namespace WinFormsApp1
 {
     public partial class Form1 : Form
-    {
+    {   
         public Form1()
         {
             InitializeComponent();
@@ -123,11 +123,13 @@ namespace WinFormsApp1
         {
             e.Cancel = true;
 
-            this.WindowState = FormWindowState.Minimized;
+            this.Hide();
 
-            this.ShowInTaskbar = false;
+            //this.WindowState = FormWindowState.Minimized;
 
-            NoticeIcon.Visible = true;
+            //this.ShowInTaskbar = false;
+
+            //NoticeIcon.Visible = true;
         }
 
         private void NoticeIcon_MouseClick(object sender, MouseEventArgs e)
@@ -138,6 +140,7 @@ namespace WinFormsApp1
             }
             else
             {
+                this.Show();
                 this.WindowState = FormWindowState.Normal;
                 this.ShowInTaskbar = true;
             }

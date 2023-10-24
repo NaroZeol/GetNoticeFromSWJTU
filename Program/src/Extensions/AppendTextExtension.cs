@@ -1,4 +1,6 @@
-﻿namespace MainFunction;
+﻿using System.Runtime.InteropServices;
+
+namespace MainFunction;
 static class AppendTextExtension
 {
     public static void AppendTextColorful(this RichTextBox rtBox, string addtext, Color color, int addNewLine = 1)
