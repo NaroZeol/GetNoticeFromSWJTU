@@ -5,7 +5,7 @@ using MainFunction;
 namespace WinFormsApp1
 {
     public partial class Form1 : Form
-    {   
+    {
         public Form1()
         {
             InitializeComponent();
@@ -14,6 +14,11 @@ namespace WinFormsApp1
             this.ShowInTaskbar = false;
 
             NoticeIcon.Visible = true;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            this.Hide();
         }
 
         private async void Button1_Click(object sender, EventArgs e)
@@ -223,7 +228,7 @@ namespace WinFormsApp1
                     NoticeSourceIndex |= 4;
             }
             else
-            { 
+            {
                 timerOfFlashingButton.Stop();
                 NoticeIcon.Icon = icon1;
                 NoticeSourceIndex = 0;
@@ -259,7 +264,5 @@ namespace WinFormsApp1
         {
             OpenWindowMenuBottom_Click(sender, e);
         }
-
-
     }
 }

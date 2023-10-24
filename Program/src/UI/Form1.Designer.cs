@@ -63,18 +63,7 @@
             button2.TabIndex = 2;
             button2.Text = "计院";
             button2.UseVisualStyleBackColor = true;
-            button2.Click += Button2_Click;            
-            // 
-            // button3
-            // 
-            button3.Font = new Font("Microsoft YaHei UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
-            button3.Location = new Point(390, 539);
-            button3.Name = "button3";
-            button3.Size = new Size(117, 68);
-            button3.TabIndex = 4;
-            button3.Text = "学工部";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
+            button2.Click += Button2_Click;
             // 
             // NoticeIcon
             // 
@@ -131,6 +120,17 @@
             timerOfAutoRunning.Interval = 10000;
             timerOfAutoRunning.Tick += TimerOfAutoRunning_Tick;
             // 
+            // button3
+            // 
+            button3.Font = new Font("Microsoft YaHei UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
+            button3.Location = new Point(390, 539);
+            button3.Name = "button3";
+            button3.Size = new Size(117, 68);
+            button3.TabIndex = 4;
+            button3.Text = "学工部";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -150,6 +150,7 @@
             Text = "GetNoticeFromSWJTU";
             TransparencyKey = Color.Transparent;
             FormClosing += Form1_FormClosing;
+            Load += Form1_Load;
             NoticeMenu.ResumeLayout(false);
             ResumeLayout(false);
         }
