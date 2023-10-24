@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
 using MainFunction;
 
 namespace WindowsFormsApp2
@@ -38,7 +36,7 @@ namespace WindowsFormsApp2
             FileStream file = new FileStream("JWC.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
             string oldText = FileData.ReadFromFile(file);
-            string diff = FileData.CheckDiff(task.Result, file);
+            string diff = FileData.CheckDiff(task.Result, oldText);
 
             richTextBox1.Clear();
             richTextBox1.AppendTextColorful(diff, Color.Red, 2);
@@ -70,7 +68,7 @@ namespace WindowsFormsApp2
             FileStream file = new FileStream("SCAI.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
             string oldText = FileData.ReadFromFile(file);
-            string diff = FileData.CheckDiff(task.Result, file);
+            string diff = FileData.CheckDiff(task.Result, oldText);
 
             richTextBox1.Clear();
             richTextBox1.AppendTextColorful(diff, Color.Red, 2);
@@ -86,6 +84,38 @@ namespace WindowsFormsApp2
             button2.Focus();
         }
 
+        private async void Button3_Click(object sender, EventArgs e)
+        {
+            button3.Enabled = false;
+            this.ActiveControl = null;
+            string LoadingSymbol = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏";
+            int i = 0;
+            Task<string> task = GetNotice.GetNoticeFromXGBAsync();
+
+            while (!task.IsCompleted)
+            {
+                button3.Text = LoadingSymbol[i++ % LoadingSymbol.Length].ToString();
+                await Task.Delay(100);
+            }
+            FileStream file = new FileStream("XGB.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+
+            string oldText = FileData.ReadFromFile(file);
+            string diff = FileData.CheckDiff(task.Result, oldText);
+
+            richTextBox1.Clear();
+            richTextBox1.AppendTextColorful(diff, Color.Red, 2);
+            richTextBox1.AppendTextColorful(oldText, Color.Black, 1);
+            richTextBox1.SelectionStart = 0;
+            richTextBox1.ScrollToCaret();
+
+            FileData.WriteToFile(task.Result, file);
+            file.Close();
+
+            button3.Text = "学工部";
+            button3.Enabled = true;
+            button3.Focus();
+        }
+
         private void ExitProgram(object sender, EventArgs e)
         {
             this.Dispose();
@@ -96,11 +126,13 @@ namespace WindowsFormsApp2
         {
             e.Cancel = true;
 
-            this.WindowState = FormWindowState.Minimized;
+            this.Hide();
 
-            this.ShowInTaskbar = false;
+            //this.WindowState = FormWindowState.Minimized;
 
-            NoticeIcon.Visible = true;
+            //this.ShowInTaskbar = false;
+
+            //NoticeIcon.Visible = true;
         }
 
         private void NoticeIcon_MouseClick(object sender, MouseEventArgs e)
@@ -111,6 +143,7 @@ namespace WindowsFormsApp2
             }
             else
             {
+                this.Show();
                 this.WindowState = FormWindowState.Normal;
                 this.ShowInTaskbar = true;
             }
@@ -164,28 +197,44 @@ namespace WindowsFormsApp2
             }
             Task<string> task1 = GetNotice.GetNoticeFromJWCAsync();
             Task<string> task2 = GetNotice.GetNoticeFromSCAIAsync();
+            Task<string> task3 = GetNotice.GetNoticeFromXGBAsync();
 
-            await Task.WhenAll(task1, task2);
+            await Task.WhenAll(task1, task2, task3);
 
             FileStream file1 = new FileStream("JWC.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
             FileStream file2 = new FileStream("SCAI.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            FileStream file3 = new FileStream("XGB.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
-            string diff1 = FileData.CheckDiff(task1.Result, file1);
-            string diff2 = FileData.CheckDiff(task2.Result, file2);
+            string oldText1 = FileData.ReadFromFile(file1);
+            string oldText2 = FileData.ReadFromFile(file2);
+            string oldText3 = FileData.ReadFromFile(file3);
 
-            if (diff1.Length > 0 || diff2.Length > 0)
+            string diff1 = FileData.CheckDiff(task1.Result, oldText1);
+            string diff2 = FileData.CheckDiff(task2.Result, oldText2);
+            string diff3 = FileData.CheckDiff(task3.Result, oldText3);
+
+            if (diff1.Length > 0 || diff2.Length > 0 || diff3.Length > 0)
             {
-                timerOfFlashingButton.Enabled = true;
+                timerOfFlashingButton.Start();
                 NoticeSourceIndex = 0;
 
                 if (diff1.Length > 0)
                     NoticeSourceIndex |= 1;
                 if (diff2.Length > 0)
                     NoticeSourceIndex |= 2;
+                if (diff3.Length > 0)
+                    NoticeSourceIndex |= 4;
+            }
+            else
+            {
+                timerOfFlashingButton.Stop();
+                NoticeIcon.Icon = icon1;
+                NoticeSourceIndex = 0;
             }
 
             file1.Close();
             file2.Close();
+            file3.Close();
         }
 
         private int NoticeSourceIndex = 0;
@@ -194,14 +243,17 @@ namespace WindowsFormsApp2
         {
             if (timerOfFlashingButton.Enabled == true)
             {
-                timerOfFlashingButton.Enabled = false;
+                timerOfFlashingButton.Stop();
                 NoticeIcon.Icon = icon1;
                 string msg = "有新的通知";
                 if ((NoticeSourceIndex & 0x01) == 1)
                     msg = "教务网" + msg;
                 if ((NoticeSourceIndex & 0x02) == 2)
                     msg = "计院" + msg;
+                if ((NoticeSourceIndex & 0x04) == 4)
+                    msg = "学工部" + msg;
 
+                NoticeSourceIndex = 0;
                 NoticeIcon.ShowBalloonTip(1000, "通知", msg, ToolTipIcon.Info);
             }
         }
@@ -210,5 +262,6 @@ namespace WindowsFormsApp2
         {
             OpenWindowMenuBottom_Click(sender, e);
         }
+
     }
 }

@@ -1,7 +1,4 @@
-﻿using System.Drawing;
-using System.Windows.Forms;
-
-namespace WinFormsApp1
+﻿namespace WinFormsApp1
 {
     partial class Form1
     {
@@ -42,13 +39,14 @@ namespace WinFormsApp1
             richTextBox1 = new RichTextBox();
             timerOfFlashingButton = new System.Windows.Forms.Timer(components);
             timerOfAutoRunning = new System.Windows.Forms.Timer(components);
+            button3 = new Button();
             NoticeMenu.SuspendLayout();
             SuspendLayout();
             // 
             // button1
             // 
             button1.Font = new Font("Microsoft YaHei UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
-            button1.Location = new Point(461, 539);
+            button1.Location = new Point(551, 539);
             button1.Name = "button1";
             button1.Size = new Size(117, 68);
             button1.TabIndex = 0;
@@ -59,13 +57,24 @@ namespace WinFormsApp1
             // button2
             // 
             button2.Font = new Font("Microsoft YaHei UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
-            button2.Location = new Point(657, 539);
+            button2.Location = new Point(711, 539);
             button2.Name = "button2";
             button2.Size = new Size(117, 68);
             button2.TabIndex = 2;
             button2.Text = "计院";
             button2.UseVisualStyleBackColor = true;
-            button2.Click += Button2_Click;
+            button2.Click += Button2_Click;            
+            // 
+            // button3
+            // 
+            button3.Font = new Font("Microsoft YaHei UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
+            button3.Location = new Point(390, 539);
+            button3.Name = "button3";
+            button3.Size = new Size(117, 68);
+            button3.TabIndex = 4;
+            button3.Text = "学工部";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // NoticeIcon
             // 
@@ -119,7 +128,7 @@ namespace WinFormsApp1
             // timerOfAutoRunning
             // 
             timerOfAutoRunning.Enabled = true;
-            timerOfAutoRunning.Interval = 120000;//2min
+            timerOfAutoRunning.Interval = 10000;
             timerOfAutoRunning.Tick += TimerOfAutoRunning_Tick;
             // 
             // Form1
@@ -130,6 +139,7 @@ namespace WinFormsApp1
             BackColor = SystemColors.Control;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1288, 619);
+            Controls.Add(button3);
             Controls.Add(richTextBox1);
             Controls.Add(button2);
             Controls.Add(button1);
@@ -155,5 +165,6 @@ namespace WinFormsApp1
         private ToolStripMenuItem OpenWindowMenuBotton;
         private System.Windows.Forms.Timer timerOfFlashingButton;
         private System.Windows.Forms.Timer timerOfAutoRunning;
+        private Button button3;
     }
 }

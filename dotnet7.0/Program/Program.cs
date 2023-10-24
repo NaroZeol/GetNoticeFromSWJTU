@@ -1,8 +1,4 @@
-using System;
 using System.Reflection;
-using System.Threading;
-using System.Windows.Forms;
-using System.Configuration;
 
 namespace WinFormsApp1
 {
@@ -13,18 +9,19 @@ namespace WinFormsApp1
         /// </summary>
         [STAThread]
 
-        public static void Main()
+        static void Main()
         {
             string? proGramName = Assembly.GetExecutingAssembly().GetName().Name;
 
-            using Mutex mutex = new Mutex(false, proGramName, out bool createdNew);
+            using Mutex mutex = new(false, proGramName, out bool createdNew);
             if (!createdNew)
             {
                 return;
             }
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            // To customize application configuration such as set high DPI settings or default font,
+            // see https://aka.ms/applicationconfiguration.
+            ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
         }
     }

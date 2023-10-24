@@ -1,57 +1,52 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.Linq;
 
-namespace MainFunction
+namespace MainFunction;
+public static class FileData
 {
-    public static class FileData
+    public static void WriteToFile(string text, FileStream file)
     {
-        public static void WriteToFile(string text, FileStream file)
-        {
-            file.Seek(0, SeekOrigin.Begin);
-            file.SetLength(0);
-            StreamWriter sw = new StreamWriter(file);
-            sw.Write(text);
-            sw.Flush();
-        }
+        file.Seek(0, SeekOrigin.Begin);
+        file.SetLength(0);
+        StreamWriter sw = new(file);
+        sw.Write(text);
+        sw.Flush();
+    }
 
-        public static string ReadFromFile(FileStream file)
-        {
-            StreamReader sr = new StreamReader(file);
-            string ret = sr.ReadToEnd();
-            file.Seek(0, SeekOrigin.Begin);
-            return ret;
-        }
+    public static string ReadFromFile(FileStream file)
+    {
+        StreamReader sr = new(file);
+        string ret = sr.ReadToEnd();
+        file.Seek(0, SeekOrigin.Begin);
+        return ret;
+    }
 
-        public static string CheckDiff(string text, FileStream file)
+    public static string CheckDiff(string newText, string oldText)
+    {
+        if (oldText.Length == 0)
         {
-            string oldText = ReadFromFile(file);
-            if (oldText.Length == 0)
+            return newText;
+        }
+        List<string> newTextList = newText.Split('\n').ToList();
+        List<string> oldTextList = oldText.Split('\n').ToList();
+        
+        string ret = "";
+        int indexOfNewText = 0;
+        int indexOfOldText = 0;
+
+        while (indexOfNewText < newTextList.Count && indexOfOldText < oldTextList.Count)
+        {
+            if (newTextList[indexOfNewText] == oldTextList[indexOfOldText])
             {
-                return text;
+                indexOfNewText++;
+                indexOfOldText++;
             }
-            List<string> newTextList = text.Split('\n').ToList();
-            List<string> oldTextList = oldText.Split('\n').ToList();
-
-            string ret = "";
-            int indexOfNewText = 0;
-            int indexOfOldText = 0;
-
-            while (indexOfNewText < newTextList.Count && indexOfOldText < oldTextList.Count)
+            else
             {
-                if (newTextList[indexOfNewText] == oldTextList[indexOfOldText])
-                {
-                    indexOfNewText++;
-                    indexOfOldText++;
-                }
-                else
-                {
-                    ret += newTextList[indexOfNewText] + "\n";
-                    indexOfNewText++;
-                }
+                ret += newTextList[indexOfNewText] + "\n";
+                indexOfNewText++;
             }
-
-            return ret.TrimEnd();
         }
+
+        return ret.TrimEnd();
     }
 }

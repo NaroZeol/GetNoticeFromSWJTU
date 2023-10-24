@@ -2,17 +2,15 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>net7.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
-    <UseWindowsForms>True</UseWindowsForms>
-	<ImplicitUsings>disable</ImplicitUsings>
-    <ApplicationIcon>Resources\icon\Normal.ico</ApplicationIcon>
-    <UseWPF>False</UseWPF>
-    <StartupObject>WinFormsApp1.Program</StartupObject>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>Normal.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Resources\icon\Normal.ico" />
+    <Content Include="Normal.ico" />
   </ItemGroup>
 
   <ItemGroup>

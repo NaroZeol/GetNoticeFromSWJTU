@@ -23,14 +23,13 @@ namespace MainFunction
             return ret;
         }
 
-        public static string CheckDiff(string text, FileStream file)
+        public static string CheckDiff(string newText, string oldText)
         {
-            string oldText = ReadFromFile(file);
             if (oldText.Length == 0)
             {
-                return text;
+                return newText;
             }
-            List<string> newTextList = text.Split('\n').ToList();
+            List<string> newTextList = newText.Split('\n').ToList();
             List<string> oldTextList = oldText.Split('\n').ToList();
 
             string ret = "";
