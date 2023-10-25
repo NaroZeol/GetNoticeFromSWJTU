@@ -185,6 +185,7 @@ namespace WinFormsApp1
 
         private void OpenWindowMenuBottom_Click(object sender, EventArgs e)
         {
+            this.Show();
             this.WindowState = FormWindowState.Normal;
             this.ShowInTaskbar = true;
         }
