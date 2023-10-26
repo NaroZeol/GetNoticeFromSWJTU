@@ -12,3 +12,5 @@ bin/
 obj/
 Debug/
 Release/
+packages/
+publish/
