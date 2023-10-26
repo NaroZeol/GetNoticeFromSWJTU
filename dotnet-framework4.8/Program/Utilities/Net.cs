@@ -16,7 +16,7 @@ namespace Program.Utilities
         {
             get
             {
-                return InternetGetConnectedState(out int n, 0);
+                return InternetGetConnectedState(out int _, 0);
             }
         }
     }

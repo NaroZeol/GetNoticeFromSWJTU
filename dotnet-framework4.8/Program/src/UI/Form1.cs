@@ -1,8 +1,11 @@
-﻿using System.Reflection;
-using System.Xml;
+﻿using System;
+using System.Drawing;
+using System.IO;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using MainFunction;
 
-namespace WinFormsApp1
+namespace WindowsFormsApp2
 {
     public partial class Form1 : Form
     {
@@ -15,12 +18,10 @@ namespace WinFormsApp1
 
             NoticeIcon.Visible = true;
         }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             this.Hide();
         }
-
         private async void Button1_Click(object sender, EventArgs e)
         {
             button1.Enabled = false;
@@ -35,7 +36,7 @@ namespace WinFormsApp1
                 await Task.Delay(100);
             }
 
-            FileStream file = new("JWC.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            FileStream file = new FileStream("JWC.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
             string oldText = FileData.ReadFromFile(file);
             string diff = FileData.CheckDiff(task.Result, oldText);
@@ -67,7 +68,7 @@ namespace WinFormsApp1
                 button2.Text = LoadingSymbol[i++ % LoadingSymbol.Length].ToString();
                 await Task.Delay(100);
             }
-            FileStream file = new("SCAI.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            FileStream file = new FileStream("SCAI.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
             string oldText = FileData.ReadFromFile(file);
             string diff = FileData.CheckDiff(task.Result, oldText);
@@ -86,7 +87,7 @@ namespace WinFormsApp1
             button2.Focus();
         }
 
-        private async void button3_Click(object sender, EventArgs e)
+        private async void Button3_Click(object sender, EventArgs e)
         {
             button3.Enabled = false;
             this.ActiveControl = null;
@@ -99,7 +100,7 @@ namespace WinFormsApp1
                 button3.Text = LoadingSymbol[i++ % LoadingSymbol.Length].ToString();
                 await Task.Delay(100);
             }
-            FileStream file = new("XGB.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            FileStream file = new FileStream("XGB.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
             string oldText = FileData.ReadFromFile(file);
             string diff = FileData.CheckDiff(task.Result, oldText);
@@ -171,10 +172,10 @@ namespace WinFormsApp1
 
         private void RichTextBox1_LinkClicked(object sender, LinkClickedEventArgs e)
         {
-            if (e.LinkText is not null)
+            if (e.LinkText != null)
             {
                 string url = e.LinkText;
-                System.Diagnostics.ProcessStartInfo info = new()
+                System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo()
                 {
                     FileName = url,
                     UseShellExecute = true
@@ -203,9 +204,9 @@ namespace WinFormsApp1
 
             await Task.WhenAll(task1, task2, task3);
 
-            FileStream file1 = new("JWC.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
-            FileStream file2 = new("SCAI.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
-            FileStream file3 = new("XGB.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            FileStream file1 = new FileStream("JWC.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            FileStream file2 = new FileStream("SCAI.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            FileStream file3 = new FileStream("XGB.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
             string oldText1 = FileData.ReadFromFile(file1);
             string oldText2 = FileData.ReadFromFile(file2);
