@@ -47,7 +47,7 @@ namespace MainFunction
             HtmlAgilityPack.HtmlDocument doc = new HtmlDocument();
             try
             {
-                doc = await web.LoadFromWebAsync("https://scai.swjtu.edu.cn/web/page-module.html?mid=B730BEB095B31840");
+                doc = await web.LoadFromWebAsync("https://scai.swjtu.edu.cn/web/page-module.html?mid=B730BEB095B31840&tid=350");
             }
             catch (System.Net.Http.HttpRequestException)
             {
