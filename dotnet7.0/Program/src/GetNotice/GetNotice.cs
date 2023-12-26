@@ -11,7 +11,7 @@ public static class GetNotice
         {
             doc = await web.LoadFromWebAsync("http://jwc.swjtu.edu.cn/vatuu/WebAction?setAction=newsList");
         }
-        catch (System.Net.Http.HttpRequestException )
+        catch (Exception e) when (e is System.Net.Http.HttpRequestException || e is System.Net.Sockets.SocketException)
         {
             FileStream fileStream = new FileStream("JWC.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
             string ret = FileData.ReadFromFile(fileStream);
@@ -42,7 +42,7 @@ public static class GetNotice
         {
             doc = await web.LoadFromWebAsync("https://scai.swjtu.edu.cn/web/page-module.html?mid=B730BEB095B31840&tid=350");
         }
-        catch (System.Net.Http.HttpRequestException )
+        catch (Exception e) when (e is System.Net.Http.HttpRequestException || e is System.Net.Sockets.SocketException)
         {
             FileStream fileStream = new FileStream("SCAI.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
             string ret = FileData.ReadFromFile(fileStream);
@@ -84,7 +84,7 @@ public static class GetNotice
         {
             doc = await web.LoadFromWebAsync("http://xg.swjtu.edu.cn/web/Home/PushNewsList?Lmk7LJw34Jmu=010j.shtml");
         }
-        catch (System.Net.Http.HttpRequestException)
+        catch (Exception e) when (e is System.Net.Http.HttpRequestException || e is System.Net.Sockets.SocketException)
         {
             FileStream fileStream = new FileStream("XGB.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
             string ret = FileData.ReadFromFile(fileStream);
