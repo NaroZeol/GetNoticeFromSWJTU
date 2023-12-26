@@ -34,8 +34,8 @@ namespace MainFunction
                 string link = node.SelectSingleNode(".//a").Attributes["href"].Value;
                 string linkpart = link.Substring(3);
                 string title = node.SelectSingleNode(".//a").InnerText;
-                result += "����: " + title + "\n";
-                result += "����: " + baseUrl + linkpart + "\n";
+                result += "标题：" + title + "\n";
+                result += "链接：" + baseUrl + linkpart + "\n";
                 result += "\n";
             }
 
@@ -77,8 +77,8 @@ namespace MainFunction
                 string link = node.SelectSingleNode(".//a").Attributes["href"].Value;
                 string linkpart = link.Substring(3);
                 string title = node.SelectSingleNode(".//a").InnerText;
-                result += "����: " + title + "\n";
-                result += "����: " + baseUrl + linkpart + "\n";
+                result += "标题：" + title + "\n";
+                result += "链接：" + baseUrl + linkpart + "\n";
                 result += "\n";
             }
 
@@ -110,8 +110,8 @@ namespace MainFunction
             {
                 string link = node.SelectSingleNode(".//a").Attributes["href"].Value;
                 string title = node.SelectSingleNode(".//a").InnerText;
-                result += "����: " + title + "\n";
-                result += "����: " + baseUrl + link + "\n";
+                result += "标题：" + title + "\n";
+                result += "链接：" + baseUrl + link + "\n";
                 result += "\n";
             }
 
