@@ -5,6 +5,14 @@ using System;
 
 namespace MainFunction
 {
+    private static string GetFileContent(string fileName)
+    {
+        FileStream fileStream = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+        string ret = FileData.ReadFromFile(fileStream);
+        fileStream.Close();
+        return ret;
+    }
+    
     public static class GetNotice
     {
         public async static Task<string> GetNoticeFromJWCAsync()
@@ -17,14 +25,16 @@ namespace MainFunction
             }
             catch (Exception e) when (e is System.Net.Http.HttpRequestException || e is System.Net.Sockets.SocketException)
             {
-                FileStream fileStream = new FileStream("JWC.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
-                string ret = FileData.ReadFromFile(fileStream);
-                fileStream.Close();
-                return ret;
+                return GetFileContent("JWC.txt");
             }
 
 
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='littleResultDiv']");
+
+            if (nodes == null)
+            {
+                return GetFileContent("JWC.txt");
+            }
 
             string baseUrl = "http://jwc.swjtu.edu.cn/";
 
@@ -51,10 +61,7 @@ namespace MainFunction
             }
             catch (Exception e) when (e is System.Net.Http.HttpRequestException || e is System.Net.Sockets.SocketException)
             {
-                FileStream fileStream = new FileStream("SCAI.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
-                string ret = FileData.ReadFromFile(fileStream);
-                fileStream.Close();
-                return ret;
+                return GetFileContent("SCAI.txt");
             }
 
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='list-top-item fl']");
@@ -62,6 +69,11 @@ namespace MainFunction
             nodes.Append(nodes1[0]);
 
             HtmlNodeCollection normalNotice = doc.DocumentNode.SelectNodes("//div[@class='info-wrapper fl']");
+
+            if (normalNotice == null)
+            {
+                return GetFileContent("SCAI.txt");
+            }
 
             foreach (HtmlNode node in normalNotice)
             {
@@ -71,6 +83,11 @@ namespace MainFunction
             string baseUrl = "https://scai.swjtu.edu.cn/";
 
             string result = "";
+
+            if (nodes == null)
+            {
+                return GetFileContent("SCAI.txt");
+            }
 
             foreach (HtmlNode node in nodes)
             {
@@ -95,13 +112,15 @@ namespace MainFunction
             }
             catch (Exception e) when (e is System.Net.Http.HttpRequestException || e is System.Net.Sockets.SocketException)
             {
-                FileStream fileStream = new FileStream("XGB.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
-                string ret = FileData.ReadFromFile(fileStream);
-                fileStream.Close();
-                return ret;
+                return GetFileContent("XGB.txt");
             }
 
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='right-side']//ul[@class='block-ctxlist']//li");
+
+            if (nodes == null)
+            {
+                return GetFileContent("XGB.txt");
+            }
 
             string baseUrl = "http://xg.swjtu.edu.cn/";
 
