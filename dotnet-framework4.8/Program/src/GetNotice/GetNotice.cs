@@ -4,17 +4,16 @@ using System.IO;
 using System;
 
 namespace MainFunction
-{
-    private static string GetFileContent(string fileName)
-    {
-        FileStream fileStream = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
-        string ret = FileData.ReadFromFile(fileStream);
-        fileStream.Close();
-        return ret;
-    }
-    
+{   
     public static class GetNotice
     {
+        private static string GetFileContent(string fileName)
+        {
+            FileStream fileStream = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            string ret = FileData.ReadFromFile(fileStream);
+            fileStream.Close();
+            return ret;
+        }
         public async static Task<string> GetNoticeFromJWCAsync()
         {
             HtmlWeb web = new HtmlWeb();
