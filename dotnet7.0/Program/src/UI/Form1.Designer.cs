@@ -46,9 +46,10 @@
             // button1
             // 
             button1.Font = new Font("Microsoft YaHei UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
-            button1.Location = new Point(551, 539);
+            button1.Location = new Point(708, 634);
+            button1.Margin = new Padding(4, 4, 4, 4);
             button1.Name = "button1";
-            button1.Size = new Size(117, 68);
+            button1.Size = new Size(150, 80);
             button1.TabIndex = 0;
             button1.Text = "教务处";
             button1.UseVisualStyleBackColor = true;
@@ -57,9 +58,10 @@
             // button2
             // 
             button2.Font = new Font("Microsoft YaHei UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
-            button2.Location = new Point(711, 539);
+            button2.Location = new Point(914, 634);
+            button2.Margin = new Padding(4, 4, 4, 4);
             button2.Name = "button2";
-            button2.Size = new Size(117, 68);
+            button2.Size = new Size(150, 80);
             button2.TabIndex = 2;
             button2.Text = "计院";
             button2.UseVisualStyleBackColor = true;
@@ -80,19 +82,19 @@
             NoticeMenu.ImageScalingSize = new Size(20, 20);
             NoticeMenu.Items.AddRange(new ToolStripItem[] { OpenWindowMenuBotton, ExitMenuBotton });
             NoticeMenu.Name = "contextMenuStrip1";
-            NoticeMenu.Size = new Size(101, 48);
+            NoticeMenu.Size = new Size(109, 52);
             // 
             // OpenWindowMenuBotton
             // 
             OpenWindowMenuBotton.Name = "OpenWindowMenuBotton";
-            OpenWindowMenuBotton.Size = new Size(100, 22);
+            OpenWindowMenuBotton.Size = new Size(108, 24);
             OpenWindowMenuBotton.Text = "打开";
             OpenWindowMenuBotton.Click += OpenWindowMenuBottom_Click;
             // 
             // ExitMenuBotton
             // 
             ExitMenuBotton.Name = "ExitMenuBotton";
-            ExitMenuBotton.Size = new Size(100, 22);
+            ExitMenuBotton.Size = new Size(108, 24);
             ExitMenuBotton.Text = "退出";
             ExitMenuBotton.Click += ExitProgram;
             // 
@@ -101,10 +103,11 @@
             richTextBox1.BackColor = SystemColors.Control;
             richTextBox1.BorderStyle = BorderStyle.None;
             richTextBox1.Font = new Font("Microsoft YaHei UI", 15F, FontStyle.Regular, GraphicsUnit.Point);
-            richTextBox1.Location = new Point(12, 12);
+            richTextBox1.Location = new Point(15, 14);
+            richTextBox1.Margin = new Padding(4, 4, 4, 4);
             richTextBox1.Name = "richTextBox1";
             richTextBox1.ReadOnly = true;
-            richTextBox1.Size = new Size(1264, 521);
+            richTextBox1.Size = new Size(1625, 613);
             richTextBox1.TabIndex = 3;
             richTextBox1.Text = "";
             richTextBox1.LinkClicked += RichTextBox1_LinkClicked;
@@ -117,15 +120,16 @@
             // timerOfAutoRunning
             // 
             timerOfAutoRunning.Enabled = true;
-            timerOfAutoRunning.Interval = 10000;
+            timerOfAutoRunning.Interval = 30000;
             timerOfAutoRunning.Tick += TimerOfAutoRunning_Tick;
             // 
             // button3
             // 
             button3.Font = new Font("Microsoft YaHei UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
-            button3.Location = new Point(390, 539);
+            button3.Location = new Point(501, 634);
+            button3.Margin = new Padding(4, 4, 4, 4);
             button3.Name = "button3";
-            button3.Size = new Size(117, 68);
+            button3.Size = new Size(150, 80);
             button3.TabIndex = 4;
             button3.Text = "学工部";
             button3.UseVisualStyleBackColor = true;
@@ -133,18 +137,19 @@
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleDimensions = new SizeF(9F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             BackColor = SystemColors.Control;
             BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(1288, 619);
+            ClientSize = new Size(1656, 728);
             Controls.Add(button3);
             Controls.Add(richTextBox1);
             Controls.Add(button2);
             Controls.Add(button1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(4, 4, 4, 4);
             MaximizeBox = false;
             Name = "Form1";
             Text = "GetNoticeFromSWJTU";

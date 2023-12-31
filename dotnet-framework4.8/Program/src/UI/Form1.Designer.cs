@@ -50,10 +50,10 @@ namespace WindowsFormsApp2
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft YaHei UI", 20F);
-            this.button1.Location = new System.Drawing.Point(467, 474);
-            this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button1.Location = new System.Drawing.Point(623, 592);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(105, 68);
+            this.button1.Size = new System.Drawing.Size(140, 85);
             this.button1.TabIndex = 0;
             this.button1.Text = "教务处";
             this.button1.UseVisualStyleBackColor = true;
@@ -62,10 +62,10 @@ namespace WindowsFormsApp2
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Microsoft YaHei UI", 20F);
-            this.button2.Location = new System.Drawing.Point(627, 474);
-            this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button2.Location = new System.Drawing.Point(836, 592);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(105, 68);
+            this.button2.Size = new System.Drawing.Size(140, 85);
             this.button2.TabIndex = 2;
             this.button2.Text = "计院";
             this.button2.UseVisualStyleBackColor = true;
@@ -74,9 +74,10 @@ namespace WindowsFormsApp2
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("Microsoft YaHei UI", 20F);
-            this.button3.Location = new System.Drawing.Point(307, 474);
+            this.button3.Location = new System.Drawing.Point(409, 592);
+            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(105, 68);
+            this.button3.Size = new System.Drawing.Size(140, 85);
             this.button3.TabIndex = 4;
             this.button3.Text = "学工部";
             this.button3.UseVisualStyleBackColor = true;
@@ -100,19 +101,19 @@ namespace WindowsFormsApp2
             this.OpenWindowMenuBotton,
             this.ExitMenuBotton});
             this.NoticeMenu.Name = "contextMenuStrip1";
-            this.NoticeMenu.Size = new System.Drawing.Size(101, 48);
+            this.NoticeMenu.Size = new System.Drawing.Size(109, 52);
             // 
             // OpenWindowMenuBotton
             // 
             this.OpenWindowMenuBotton.Name = "OpenWindowMenuBotton";
-            this.OpenWindowMenuBotton.Size = new System.Drawing.Size(100, 22);
+            this.OpenWindowMenuBotton.Size = new System.Drawing.Size(108, 24);
             this.OpenWindowMenuBotton.Text = "打开";
             this.OpenWindowMenuBotton.Click += new System.EventHandler(this.OpenWindowMenuBottom_Click);
             // 
             // ExitMenuBotton
             // 
             this.ExitMenuBotton.Name = "ExitMenuBotton";
-            this.ExitMenuBotton.Size = new System.Drawing.Size(100, 22);
+            this.ExitMenuBotton.Size = new System.Drawing.Size(108, 24);
             this.ExitMenuBotton.Text = "退出";
             this.ExitMenuBotton.Click += new System.EventHandler(this.ExitProgram);
             // 
@@ -121,11 +122,11 @@ namespace WindowsFormsApp2
             this.richTextBox1.BackColor = System.Drawing.SystemColors.Control;
             this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.richTextBox1.Font = new System.Drawing.Font("Microsoft YaHei UI", 15F);
-            this.richTextBox1.Location = new System.Drawing.Point(12, 11);
-            this.richTextBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.richTextBox1.Location = new System.Drawing.Point(16, 14);
+            this.richTextBox1.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(1072, 460);
+            this.richTextBox1.Size = new System.Drawing.Size(1429, 575);
             this.richTextBox1.TabIndex = 3;
             this.richTextBox1.Text = "";
             this.richTextBox1.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.RichTextBox1_LinkClicked);
@@ -138,24 +139,24 @@ namespace WindowsFormsApp2
             // timerOfAutoRunning
             // 
             this.timerOfAutoRunning.Enabled = true;
-            this.timerOfAutoRunning.Interval = 10000;
+            this.timerOfAutoRunning.Interval = 30000;
             this.timerOfAutoRunning.Tick += new System.EventHandler(this.TimerOfAutoRunning_Tick);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1096, 554);
+            this.ClientSize = new System.Drawing.Size(1461, 692);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "GetNoticeFromSWJTU";

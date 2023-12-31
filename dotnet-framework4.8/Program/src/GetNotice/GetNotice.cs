@@ -5,6 +5,14 @@ using System;
 
 namespace MainFunction
 {
+    private static string GetFileContent(string fileName)
+    {
+        FileStream fileStream = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+        string ret = FileData.ReadFromFile(fileStream);
+        fileStream.Close();
+        return ret;
+    }
+    
     public static class GetNotice
     {
         public async static Task<string> GetNoticeFromJWCAsync()
@@ -15,16 +23,18 @@ namespace MainFunction
             {
                 doc = await web.LoadFromWebAsync("http://jwc.swjtu.edu.cn/vatuu/WebAction?setAction=newsList");
             }
-            catch (Exception _)
+            catch (Exception e) when (e is System.Net.Http.HttpRequestException || e is System.Net.Sockets.SocketException)
             {
-                FileStream fileStream = new FileStream("JWC.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
-                string ret = FileData.ReadFromFile(fileStream);
-                fileStream.Close();
-                return ret;
+                return GetFileContent("JWC.txt");
             }
 
 
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='littleResultDiv']");
+
+            if (nodes == null)
+            {
+                return GetFileContent("JWC.txt");
+            }
 
             string baseUrl = "http://jwc.swjtu.edu.cn/";
 
@@ -34,8 +44,8 @@ namespace MainFunction
                 string link = node.SelectSingleNode(".//a").Attributes["href"].Value;
                 string linkpart = link.Substring(3);
                 string title = node.SelectSingleNode(".//a").InnerText;
-                result += "±êÌâ: " + title + "\n";
-                result += "Á´½Ó: " + baseUrl + linkpart + "\n";
+                result += "æ ‡é¢˜ï¼š" + title + "\n";
+                result += "é“¾æŽ¥ï¼š" + baseUrl + linkpart + "\n";
                 result += "\n";
             }
 
@@ -47,14 +57,11 @@ namespace MainFunction
             HtmlAgilityPack.HtmlDocument doc = new HtmlDocument();
             try
             {
-                doc = await web.LoadFromWebAsync("https://scai.swjtu.edu.cn/web/page-module.html?mid=B730BEB095B31840");
+                doc = await web.LoadFromWebAsync("https://scai.swjtu.edu.cn/web/page-module.html?mid=B730BEB095B31840&tid=350");
             }
-            catch (Exception _)
+            catch (Exception e) when (e is System.Net.Http.HttpRequestException || e is System.Net.Sockets.SocketException)
             {
-                FileStream fileStream = new FileStream("SCAI.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
-                string ret = FileData.ReadFromFile(fileStream);
-                fileStream.Close();
-                return ret;
+                return GetFileContent("SCAI.txt");
             }
 
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='list-top-item fl']");
@@ -62,6 +69,11 @@ namespace MainFunction
             nodes.Append(nodes1[0]);
 
             HtmlNodeCollection normalNotice = doc.DocumentNode.SelectNodes("//div[@class='info-wrapper fl']");
+
+            if (normalNotice == null)
+            {
+                return GetFileContent("SCAI.txt");
+            }
 
             foreach (HtmlNode node in normalNotice)
             {
@@ -72,13 +84,18 @@ namespace MainFunction
 
             string result = "";
 
+            if (nodes == null)
+            {
+                return GetFileContent("SCAI.txt");
+            }
+
             foreach (HtmlNode node in nodes)
             {
                 string link = node.SelectSingleNode(".//a").Attributes["href"].Value;
                 string linkpart = link.Substring(3);
                 string title = node.SelectSingleNode(".//a").InnerText;
-                result += "±êÌâ: " + title + "\n";
-                result += "Á´½Ó: " + baseUrl + linkpart + "\n";
+                result += "æ ‡é¢˜ï¼š" + title + "\n";
+                result += "é“¾æŽ¥ï¼š" + baseUrl + linkpart + "\n";
                 result += "\n";
             }
 
@@ -93,15 +110,17 @@ namespace MainFunction
             {
                 doc = await web.LoadFromWebAsync("http://xg.swjtu.edu.cn/web/Home/PushNewsList?Lmk7LJw34Jmu=010j.shtml");
             }
-            catch (Exception _)
+            catch (Exception e) when (e is System.Net.Http.HttpRequestException || e is System.Net.Sockets.SocketException)
             {
-                FileStream fileStream = new FileStream("XGB.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
-                string ret = FileData.ReadFromFile(fileStream);
-                fileStream.Close();
-                return ret;
+                return GetFileContent("XGB.txt");
             }
 
             HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='right-side']//ul[@class='block-ctxlist']//li");
+
+            if (nodes == null)
+            {
+                return GetFileContent("XGB.txt");
+            }
 
             string baseUrl = "http://xg.swjtu.edu.cn/";
 
@@ -110,8 +129,8 @@ namespace MainFunction
             {
                 string link = node.SelectSingleNode(".//a").Attributes["href"].Value;
                 string title = node.SelectSingleNode(".//a").InnerText;
-                result += "±êÌâ: " + title + "\n";
-                result += "Á´½Ó: " + baseUrl + link + "\n";
+                result += "æ ‡é¢˜ï¼š" + title + "\n";
+                result += "é“¾æŽ¥ï¼š" + baseUrl + link + "\n";
                 result += "\n";
             }
 
