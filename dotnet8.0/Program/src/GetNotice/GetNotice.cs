@@ -8,25 +8,27 @@ public static class GetNotice
         FileStream fileStream = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
         string ret = FileData.ReadFromFile(fileStream);
         fileStream.Close();
+        ret = ret.Insert(0, "获取失败，请检查网络连接\n");
         return ret;
     }
 
-    public async static Task<string> GetNoticeFromJWCAsync()
+    public async static Task<(bool success, string text)> GetNoticeFromJWCAsync()
     {
         HtmlWeb web = new();
-        HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
+        HtmlAgilityPack.HtmlDocument doc;
         try
         {
             doc = await web.LoadFromWebAsync("http://jwc.swjtu.edu.cn/vatuu/WebAction?setAction=newsList");
         }
         catch (Exception e) when (e is System.Net.Http.HttpRequestException || e is System.Net.Sockets.SocketException)
         {
-            return GetFileContent("JWC.txt");
+            return (false, GetFileContent("JWC.txt"));
         }
         HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='littleResultDiv']");
-        
-        if (nodes == null){
-            return GetFileContent("JWC.txt");
+
+        if (nodes == null)
+        {
+            return (false, GetFileContent("JWC.txt"));
         }
 
         string baseUrl = "http://jwc.swjtu.edu.cn/";
@@ -38,42 +40,37 @@ public static class GetNotice
             string title = node.SelectSingleNode(".//a").InnerText;
             result += "标题: " + title + "\n";
             result += "链接: " + baseUrl + link[3..] + "\n";
-            result +=  "\n";
+            result += "\n";
         }
 
-        return result;
+        return (true, result);
     }
-    public async static Task<string> GetNoticeFromSCAIAsync()
+    public async static Task<(bool success, string text)> GetNoticeFromSCAIAsync()
     {
         HtmlWeb web = new();
-        HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
+        HtmlAgilityPack.HtmlDocument doc;
         try
         {
             doc = await web.LoadFromWebAsync("https://scai.swjtu.edu.cn/web/page-module.html?mid=B730BEB095B31840&tid=350");
         }
         catch (Exception e) when (e is System.Net.Http.HttpRequestException || e is System.Net.Sockets.SocketException)
         {
-            return GetFileContent("SCAI.txt");
+            return (false, GetFileContent("SCAI.txt"));
         }
-        HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='list-top-item fl']");
-        HtmlNodeCollection nodes1 = doc.DocumentNode.SelectNodes("//div[@class='list-top-item fr']");
-        nodes.Append(nodes1[0]);
+        HtmlNodeCollection? nodes = doc.DocumentNode.SelectNodes("//div[@class='list-top-item fl']");
+        HtmlNodeCollection? nodes1 = doc.DocumentNode.SelectNodes("//div[@class='list-top-item fr']");
+        HtmlNodeCollection? normalNotice = doc.DocumentNode.SelectNodes("//div[@class='info-wrapper fl']");
 
-        HtmlNodeCollection normalNotice = doc.DocumentNode.SelectNodes("//div[@class='info-wrapper fl']");
-
-        if (normalNotice == null)
+        if (nodes == null || nodes1 == null || normalNotice == null)
         {
-            return GetFileContent("SCAI.txt");
+            return (false, GetFileContent("SCAI.txt"));
         }
+
+        nodes.Append(nodes1[0]);
 
         foreach (HtmlNode node in normalNotice)
         {
             nodes.Add(node);
-        }
-
-        if (nodes == null)
-        {
-            return GetFileContent("SCAI.txt");
         }
 
         string baseUrl = "https://scai.swjtu.edu.cn/";
@@ -89,30 +86,27 @@ public static class GetNotice
             result += "\n";
         }
 
-        return result;
+        return (true, result);
     }
 
-    public async static Task<string> GetNoticeFromXGBAsync()
+    public async static Task<(bool success, string text)> GetNoticeFromXGBAsync()
     {
         HtmlWeb web = new();
-        HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
+        HtmlAgilityPack.HtmlDocument doc;
         try
         {
             doc = await web.LoadFromWebAsync("http://xg.swjtu.edu.cn/web/Home/PushNewsList?Lmk7LJw34Jmu=010j.shtml");
         }
         catch (Exception e) when (e is System.Net.Http.HttpRequestException || e is System.Net.Sockets.SocketException)
         {
-            FileStream fileStream = new FileStream("XGB.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
-            string ret = FileData.ReadFromFile(fileStream);
-            fileStream.Close();
-            return ret;
+            return (false, GetFileContent("XGB.txt"));
         }
 
         HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='right-side']//ul[@class='block-ctxlist']//li");
 
         if (nodes == null)
         {
-            return GetFileContent("XGB.txt");
+            return (false, GetFileContent("XGB.txt"));
         }
 
         string baseUrl = "http://xg.swjtu.edu.cn/";
@@ -127,7 +121,7 @@ public static class GetNotice
             result += "\n";
         }
 
-        return result;
+        return (true, result);
     }
 
 }

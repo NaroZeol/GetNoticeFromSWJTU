@@ -27,7 +27,7 @@ namespace WinFormsApp1
             this.ActiveControl = null;
             string LoadingSymbol = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏";
             int i = 0;
-            Task<string> task = GetNotice.GetNoticeFromJWCAsync();
+            Task<(bool success, string text)> task = GetNotice.GetNoticeFromJWCAsync();
 
             while (!task.IsCompleted)
             {
@@ -38,7 +38,7 @@ namespace WinFormsApp1
             FileStream file = new("JWC.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
             string oldText = FileData.ReadFromFile(file);
-            string diff = FileData.CheckDiff(task.Result, oldText);
+            string diff = FileData.CheckDiff(task.Result.text, oldText);
 
             richTextBox1.Clear();
             richTextBox1.AppendTextColorful(diff, Color.Red, 2);
@@ -46,7 +46,8 @@ namespace WinFormsApp1
             richTextBox1.SelectionStart = 0;
             richTextBox1.ScrollToCaret();
 
-            FileData.WriteToFile(task.Result, file);
+            if (task.Result.success == true)
+                FileData.WriteToFile(task.Result.text, file);
             file.Close();
 
             button1.Text = "教务处";
@@ -60,7 +61,7 @@ namespace WinFormsApp1
             this.ActiveControl = null;
             string LoadingSymbol = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏";
             int i = 0;
-            Task<string> task = GetNotice.GetNoticeFromSCAIAsync();
+            Task<(bool success, string text)> task = GetNotice.GetNoticeFromSCAIAsync();
 
             while (!task.IsCompleted)
             {
@@ -70,7 +71,7 @@ namespace WinFormsApp1
             FileStream file = new("SCAI.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
             string oldText = FileData.ReadFromFile(file);
-            string diff = FileData.CheckDiff(task.Result, oldText);
+            string diff = FileData.CheckDiff(task.Result.text, oldText);
 
             richTextBox1.Clear();
             richTextBox1.AppendTextColorful(diff, Color.Red, 2);
@@ -78,7 +79,8 @@ namespace WinFormsApp1
             richTextBox1.SelectionStart = 0;
             richTextBox1.ScrollToCaret();
 
-            FileData.WriteToFile(task.Result, file);
+            if (task.Result.success == true)
+                FileData.WriteToFile(task.Result.text, file);
             file.Close();
 
             button2.Text = "计院";
@@ -92,7 +94,7 @@ namespace WinFormsApp1
             this.ActiveControl = null;
             string LoadingSymbol = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏";
             int i = 0;
-            Task<string> task = GetNotice.GetNoticeFromXGBAsync();
+            Task<(bool success, string text)> task = GetNotice.GetNoticeFromXGBAsync();
 
             while (!task.IsCompleted)
             {
@@ -102,7 +104,7 @@ namespace WinFormsApp1
             FileStream file = new("XGB.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
             string oldText = FileData.ReadFromFile(file);
-            string diff = FileData.CheckDiff(task.Result, oldText);
+            string diff = FileData.CheckDiff(task.Result.text, oldText);
 
             richTextBox1.Clear();
             richTextBox1.AppendTextColorful(diff, Color.Red, 2);
@@ -110,7 +112,8 @@ namespace WinFormsApp1
             richTextBox1.SelectionStart = 0;
             richTextBox1.ScrollToCaret();
 
-            FileData.WriteToFile(task.Result, file);
+            if (task.Result.success == true)
+                FileData.WriteToFile(task.Result.text, file);
             file.Close();
 
             button3.Text = "学工部";
@@ -192,17 +195,18 @@ namespace WinFormsApp1
 
         private async void TimerOfAutoRunning_Tick(object sender, EventArgs e)
         {
-            if (global::Program.Utilities.CheckNetwork.IsNetworkConnected == false)
+            Task<(bool success, string text)> task1 = GetNotice.GetNoticeFromJWCAsync();
+            Task<(bool success, string text)> task2 = GetNotice.GetNoticeFromSCAIAsync();
+            Task<(bool success, string text)> task3 = GetNotice.GetNoticeFromXGBAsync();
+
+            await Task.WhenAll(task1, task2, task3);
+
+            if (task1.Result.success == false || task2.Result.success == false || task3.Result.success == false)
             {
                 timerOfFlashingButton.Enabled = false;
                 NoticeIcon.Icon = icon1;
                 return;
             }
-            Task<string> task1 = GetNotice.GetNoticeFromJWCAsync();
-            Task<string> task2 = GetNotice.GetNoticeFromSCAIAsync();
-            Task<string> task3 = GetNotice.GetNoticeFromXGBAsync();
-
-            await Task.WhenAll(task1, task2, task3);
 
             FileStream file1 = new("JWC.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
             FileStream file2 = new("SCAI.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
@@ -212,9 +216,9 @@ namespace WinFormsApp1
             string oldText2 = FileData.ReadFromFile(file2);
             string oldText3 = FileData.ReadFromFile(file3);
 
-            string diff1 = FileData.CheckDiff(task1.Result, oldText1);
-            string diff2 = FileData.CheckDiff(task2.Result, oldText2);
-            string diff3 = FileData.CheckDiff(task3.Result, oldText3);
+            string diff1 = FileData.CheckDiff(task1.Result.text, oldText1);
+            string diff2 = FileData.CheckDiff(task2.Result.text, oldText2);
+            string diff3 = FileData.CheckDiff(task3.Result.text, oldText3);
 
             if (diff1.Length > 0 || diff2.Length > 0 || diff3.Length > 0)
             {
