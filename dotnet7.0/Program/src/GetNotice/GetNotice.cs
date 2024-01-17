@@ -14,7 +14,7 @@ public static class GetNotice
     public async static Task<string> GetNoticeFromJWCAsync()
     {
         HtmlWeb web = new();
-        HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
+        HtmlAgilityPack.HtmlDocument doc;
         try
         {
             doc = await web.LoadFromWebAsync("http://jwc.swjtu.edu.cn/vatuu/WebAction?setAction=newsList");
@@ -46,7 +46,7 @@ public static class GetNotice
     public async static Task<string> GetNoticeFromSCAIAsync()
     {
         HtmlWeb web = new();
-        HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
+        HtmlAgilityPack.HtmlDocument doc;
         try
         {
             doc = await web.LoadFromWebAsync("https://scai.swjtu.edu.cn/web/page-module.html?mid=B730BEB095B31840&tid=350");
@@ -55,25 +55,20 @@ public static class GetNotice
         {
             return GetFileContent("SCAI.txt");
         }
-        HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='list-top-item fl']");
-        HtmlNodeCollection nodes1 = doc.DocumentNode.SelectNodes("//div[@class='list-top-item fr']");
-        nodes.Append(nodes1[0]);
+        HtmlNodeCollection? nodes = doc.DocumentNode.SelectNodes("//div[@class='list-top-item fl']");
+        HtmlNodeCollection? nodes1 = doc.DocumentNode.SelectNodes("//div[@class='list-top-item fr']");
+        HtmlNodeCollection? normalNotice = doc.DocumentNode.SelectNodes("//div[@class='info-wrapper fl']");
 
-        HtmlNodeCollection normalNotice = doc.DocumentNode.SelectNodes("//div[@class='info-wrapper fl']");
-
-        if (normalNotice == null)
+        if (nodes == null || nodes1 == null || normalNotice == null)
         {
             return GetFileContent("SCAI.txt");
         }
+
+        nodes.Append(nodes1[0]);
 
         foreach (HtmlNode node in normalNotice)
         {
             nodes.Add(node);
-        }
-
-        if (nodes == null)
-        {
-            return GetFileContent("SCAI.txt");
         }
 
         string baseUrl = "https://scai.swjtu.edu.cn/";
@@ -95,17 +90,14 @@ public static class GetNotice
     public async static Task<string> GetNoticeFromXGBAsync()
     {
         HtmlWeb web = new();
-        HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
+        HtmlAgilityPack.HtmlDocument doc;
         try
         {
             doc = await web.LoadFromWebAsync("http://xg.swjtu.edu.cn/web/Home/PushNewsList?Lmk7LJw34Jmu=010j.shtml");
         }
         catch (Exception e) when (e is System.Net.Http.HttpRequestException || e is System.Net.Sockets.SocketException)
         {
-            FileStream fileStream = new FileStream("XGB.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
-            string ret = FileData.ReadFromFile(fileStream);
-            fileStream.Close();
-            return ret;
+            return GetFileContent("XGB.txt");
         }
 
         HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='right-side']//ul[@class='block-ctxlist']//li");
