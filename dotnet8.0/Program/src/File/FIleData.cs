@@ -26,27 +26,25 @@ public static class FileData
         {
             return newText;
         }
-        List<string> newTextList = newText.Split('\n').ToList();
-        List<string> oldTextList = oldText.Split('\n').ToList();
-        
-        string ret = "";
-        int indexOfNewText = 0;
-        int indexOfOldText = 0;
 
-        while (indexOfNewText < newTextList.Count && indexOfOldText < oldTextList.Count)
+        HashSet<string> newTextSet = new HashSet<string>(newText.Split('\n').ToList());
+        HashSet<string> oldTextSet = new HashSet<string>(oldText.Split('\n').ToList());
+
+        string ret = "";
+        int i = 0;
+        foreach (string line in newTextSet)
         {
-            if (newTextList[indexOfNewText] == oldTextList[indexOfOldText])
+            if (!oldTextSet.Contains(line))
             {
-                indexOfNewText++;
-                indexOfOldText++;
-            }
-            else
-            {
-                ret += newTextList[indexOfNewText] + "\n";
-                indexOfNewText++;
+                ret += line + "\n";
+                i += 1;
+                if (i % 2 == 0)
+                {
+                    ret += "\n";
+                }
             }
         }
-
+           
         return ret.TrimEnd();
     }
 }
