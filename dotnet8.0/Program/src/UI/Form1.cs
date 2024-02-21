@@ -4,9 +4,16 @@ using MainFunction;
 
 namespace WinFormsApp1
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        //global variables start
+        private int NoticeSourceIndex = 0;
+        private readonly Icon iconNormal = global::Program.Properties.Resources.Normal;
+        private readonly Icon iconOnNotify = global::Program.Properties.Resources.OnNotify;
+        private bool FlickerIconFlag = true;
+        //global variables end
+
+        public MainForm()
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Minimized;
@@ -16,14 +23,14 @@ namespace WinFormsApp1
             NoticeIcon.Visible = true;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
             this.Hide();
         }
 
-        private async void Button1_Click(object sender, EventArgs e)
+        private async void ButtonJWC_Click(object sender, EventArgs e)
         {
-            button1.Enabled = false;
+            ButtonJWC.Enabled = false;
             this.ActiveControl = null;
             string LoadingSymbol = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏";
             int i = 0;
@@ -31,7 +38,7 @@ namespace WinFormsApp1
 
             while (!task.IsCompleted)
             {
-                button1.Text = LoadingSymbol[i++ % LoadingSymbol.Length].ToString();
+                ButtonJWC.Text = LoadingSymbol[i++ % LoadingSymbol.Length].ToString();
                 await Task.Delay(100);
             }
 
@@ -40,24 +47,24 @@ namespace WinFormsApp1
             string oldText = FileData.ReadFromFile(file);
             string diff = FileData.CheckDiff(task.Result.text, oldText);
 
-            richTextBox1.Clear();
-            richTextBox1.AppendTextColorful(diff, Color.Red, 2);
-            richTextBox1.AppendTextColorful(oldText, Color.Black, 1);
-            richTextBox1.SelectionStart = 0;
-            richTextBox1.ScrollToCaret();
+            MainRichTextBox.Clear();
+            MainRichTextBox.AppendTextColorful(diff, Color.Red, 2);
+            MainRichTextBox.AppendTextColorful(oldText, Color.Black, 1);
+            MainRichTextBox.SelectionStart = 0;
+            MainRichTextBox.ScrollToCaret();
 
             if (task.Result.success == true)
                 FileData.WriteToFile(task.Result.text, file);
             file.Close();
 
-            button1.Text = "教务处";
-            button1.Enabled = true;
-            button1.Focus();
+            ButtonJWC.Text = "教务处";
+            ButtonJWC.Enabled = true;
+            ButtonJWC.Focus();
         }
 
-        private async void Button2_Click(object sender, EventArgs e)
+        private async void ButtonSCAI_Click(object sender, EventArgs e)
         {
-            button2.Enabled = false;
+            ButtonSCAI.Enabled = false;
             this.ActiveControl = null;
             string LoadingSymbol = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏";
             int i = 0;
@@ -65,7 +72,7 @@ namespace WinFormsApp1
 
             while (!task.IsCompleted)
             {
-                button2.Text = LoadingSymbol[i++ % LoadingSymbol.Length].ToString();
+                ButtonSCAI.Text = LoadingSymbol[i++ % LoadingSymbol.Length].ToString();
                 await Task.Delay(100);
             }
             FileStream file = new("SCAI.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
@@ -73,24 +80,24 @@ namespace WinFormsApp1
             string oldText = FileData.ReadFromFile(file);
             string diff = FileData.CheckDiff(task.Result.text, oldText);
 
-            richTextBox1.Clear();
-            richTextBox1.AppendTextColorful(diff, Color.Red, 2);
-            richTextBox1.AppendTextColorful(oldText, Color.Black, 1);
-            richTextBox1.SelectionStart = 0;
-            richTextBox1.ScrollToCaret();
+            MainRichTextBox.Clear();
+            MainRichTextBox.AppendTextColorful(diff, Color.Red, 2);
+            MainRichTextBox.AppendTextColorful(oldText, Color.Black, 1);
+            MainRichTextBox.SelectionStart = 0;
+            MainRichTextBox.ScrollToCaret();
 
             if (task.Result.success == true)
                 FileData.WriteToFile(task.Result.text, file);
             file.Close();
 
-            button2.Text = "计院";
-            button2.Enabled = true;
-            button2.Focus();
+            ButtonSCAI.Text = "计院";
+            ButtonSCAI.Enabled = true;
+            ButtonSCAI.Focus();
         }
 
-        private async void button3_Click(object sender, EventArgs e)
+        private async void ButtonXGB_Click(object sender, EventArgs e)
         {
-            button3.Enabled = false;
+            ButtonXGB.Enabled = false;
             this.ActiveControl = null;
             string LoadingSymbol = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏";
             int i = 0;
@@ -98,7 +105,7 @@ namespace WinFormsApp1
 
             while (!task.IsCompleted)
             {
-                button3.Text = LoadingSymbol[i++ % LoadingSymbol.Length].ToString();
+                ButtonXGB.Text = LoadingSymbol[i++ % LoadingSymbol.Length].ToString();
                 await Task.Delay(100);
             }
             FileStream file = new("XGB.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
@@ -106,19 +113,19 @@ namespace WinFormsApp1
             string oldText = FileData.ReadFromFile(file);
             string diff = FileData.CheckDiff(task.Result.text, oldText);
 
-            richTextBox1.Clear();
-            richTextBox1.AppendTextColorful(diff, Color.Red, 2);
-            richTextBox1.AppendTextColorful(oldText, Color.Black, 1);
-            richTextBox1.SelectionStart = 0;
-            richTextBox1.ScrollToCaret();
+            MainRichTextBox.Clear();
+            MainRichTextBox.AppendTextColorful(diff, Color.Red, 2);
+            MainRichTextBox.AppendTextColorful(oldText, Color.Black, 1);
+            MainRichTextBox.SelectionStart = 0;
+            MainRichTextBox.ScrollToCaret();
 
             if (task.Result.success == true)
                 FileData.WriteToFile(task.Result.text, file);
             file.Close();
 
-            button3.Text = "学工部";
-            button3.Enabled = true;
-            button3.Focus();
+            ButtonXGB.Text = "学工部";
+            ButtonXGB.Enabled = true;
+            ButtonXGB.Focus();
         }
 
         private void ExitProgram(object sender, EventArgs e)
@@ -127,7 +134,7 @@ namespace WinFormsApp1
             Environment.Exit(0);
         }
 
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
 
@@ -154,25 +161,21 @@ namespace WinFormsApp1
             }
         }
 
-        private readonly Icon icon1 = global::Program.Properties.Resources.Normal;
-        private readonly Icon icon2 = global::Program.Properties.Resources.OnNotify;
-        private bool Timer1flag = true;
-
-        private void Timer1_Tick(object sender, EventArgs e)
+        private void FlickerIconTimer_Tick(object sender, EventArgs e)
         {
-            if (Timer1flag)
+            if (FlickerIconFlag)
             {
-                NoticeIcon.Icon = icon2;
-                Timer1flag = false;
+                NoticeIcon.Icon = iconOnNotify;
+                FlickerIconFlag = false;
             }
             else
             {
-                NoticeIcon.Icon = icon1;
-                Timer1flag = true;
+                NoticeIcon.Icon = iconNormal;
+                FlickerIconFlag = true;
             }
         }
 
-        private void RichTextBox1_LinkClicked(object sender, LinkClickedEventArgs e)
+        private void MainRichTextBox_LinkClicked(object sender, LinkClickedEventArgs e)
         {
             if (e.LinkText is not null)
             {
@@ -193,65 +196,63 @@ namespace WinFormsApp1
             this.ShowInTaskbar = true;
         }
 
-        private async void TimerOfAutoRunning_Tick(object sender, EventArgs e)
+        private async void AutoRunTimer_Tick(object sender, EventArgs e)
         {
-            Task<(bool success, string text)> task1 = GetNotice.GetNoticeFromJWCAsync();
-            Task<(bool success, string text)> task2 = GetNotice.GetNoticeFromSCAIAsync();
-            Task<(bool success, string text)> task3 = GetNotice.GetNoticeFromXGBAsync();
+            Task<(bool success, string text)> taskJWC = GetNotice.GetNoticeFromJWCAsync();
+            Task<(bool success, string text)> taskSCAI = GetNotice.GetNoticeFromSCAIAsync();
+            Task<(bool success, string text)> taskXGB = GetNotice.GetNoticeFromXGBAsync();
 
-            await Task.WhenAll(task1, task2, task3);
+            await Task.WhenAll(taskJWC, taskSCAI, taskXGB);
 
-            if (task1.Result.success == false || task2.Result.success == false || task3.Result.success == false)
+            if (taskJWC.Result.success == false || taskSCAI.Result.success == false || taskXGB.Result.success == false)
             {
-                timerOfFlashingButton.Enabled = false;
-                NoticeIcon.Icon = icon1;
+                FlickerIconTimer.Enabled = false;
+                NoticeIcon.Icon = iconNormal;
                 return;
             }
 
-            FileStream file1 = new("JWC.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
-            FileStream file2 = new("SCAI.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
-            FileStream file3 = new("XGB.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            FileStream fileJWC = new("JWC.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            FileStream fileSCAI = new("SCAI.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
+            FileStream fileXGB = new("XGB.txt", FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
-            string oldText1 = FileData.ReadFromFile(file1);
-            string oldText2 = FileData.ReadFromFile(file2);
-            string oldText3 = FileData.ReadFromFile(file3);
+            string oldTextJWC = FileData.ReadFromFile(fileJWC);
+            string oldTextSCAI = FileData.ReadFromFile(fileSCAI);
+            string oldTextXGB = FileData.ReadFromFile(fileXGB);
 
-            string diff1 = FileData.CheckDiff(task1.Result.text, oldText1);
-            string diff2 = FileData.CheckDiff(task2.Result.text, oldText2);
-            string diff3 = FileData.CheckDiff(task3.Result.text, oldText3);
+            string diffJWC = FileData.CheckDiff(taskJWC.Result.text, oldTextJWC);
+            string diffSCAI = FileData.CheckDiff(taskSCAI.Result.text, oldTextSCAI);
+            string diffXGB = FileData.CheckDiff(taskXGB.Result.text, oldTextXGB);
 
-            if (diff1.Length > 0 || diff2.Length > 0 || diff3.Length > 0)
+            if (diffJWC.Length > 0 || diffSCAI.Length > 0 || diffXGB.Length > 0)
             {
-                timerOfFlashingButton.Start();
+                FlickerIconTimer.Start();
                 NoticeSourceIndex = 0;
 
-                if (diff1.Length > 0)
+                if (diffJWC.Length > 0)
                     NoticeSourceIndex |= 1;
-                if (diff2.Length > 0)
+                if (diffSCAI.Length > 0)
                     NoticeSourceIndex |= 2;
-                if (diff3.Length > 0)
+                if (diffXGB.Length > 0)
                     NoticeSourceIndex |= 4;
             }
             else
             {
-                timerOfFlashingButton.Stop();
-                NoticeIcon.Icon = icon1;
+                FlickerIconTimer.Stop();
+                NoticeIcon.Icon = iconNormal;
                 NoticeSourceIndex = 0;
             }
 
-            file1.Close();
-            file2.Close();
-            file3.Close();
+            fileJWC.Close();
+            fileSCAI.Close();
+            fileXGB.Close();
         }
-
-        private int NoticeSourceIndex = 0;
 
         private void NoticeIcon_Move(object sender, MouseEventArgs e)
         {
-            if (timerOfFlashingButton.Enabled == true)
+            if (FlickerIconTimer.Enabled == true)
             {
-                timerOfFlashingButton.Stop();
-                NoticeIcon.Icon = icon1;
+                FlickerIconTimer.Stop();
+                NoticeIcon.Icon = iconNormal;
                 string msg = "有新的通知";
                 if ((NoticeSourceIndex & 0x01) == 1)
                     msg = "教务网" + msg;
