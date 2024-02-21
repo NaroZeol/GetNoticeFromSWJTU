@@ -11,18 +11,20 @@ namespace WinFormsApp1
 
         static void Main()
         {
-            string? proGramName = Assembly.GetExecutingAssembly().GetName().Name;
-
-            using Mutex mutex = new(false, proGramName, out bool createdNew);
-            if (!createdNew)
-            {
-                return;
+            //用于确保只有一个实例在运行
+            string mutexName = "MutexForGetNoticeFromSWJTU";
+            using (Mutex mutex = new Mutex(false, mutexName, out bool isCreateNew))
+            { 
+                if (!isCreateNew)
+                {
+                    Environment.Exit(1);
+                }
             }
 
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            Application.Run(new MainForm());
         }
     }
 }
