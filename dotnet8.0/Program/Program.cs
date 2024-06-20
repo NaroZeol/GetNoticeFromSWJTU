@@ -11,12 +11,11 @@ namespace WinFormsApp1
 
         static void Main()
         {
-            //ÓÃÓÚÈ·±£Ö»ÓĞÒ»¸öÊµÀıÔÚÔËĞĞ
             string mutexName = "MutexForGetNoticeFromSWJTU";
             Mutex mutex = new Mutex(false, mutexName, out bool isCreateNew);
             if (!isCreateNew)
             {
-                MessageBox.Show(null, "ÒÑ´æÔÚÒ»¸öÔËĞĞÊµÀı", "´íÎó", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(null, "å·²å­˜åœ¨ä¸€ä¸ªè¿è¡Œå®ä¾‹", "é”™è¯¯", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Environment.Exit(1);
             }
 

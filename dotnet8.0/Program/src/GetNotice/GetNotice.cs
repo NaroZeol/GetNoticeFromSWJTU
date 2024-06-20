@@ -1,9 +1,10 @@
 ﻿using HtmlAgilityPack;
+using System.Net.Sockets;
 
 namespace MainFunction;
 public static class GetNotice
 {
-    private static string GetFileContent(string fileName)
+    private static string GetFileContentWithFault(string fileName)
     {
         FileStream fileStream = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
         string ret = FileData.ReadFromFile(fileStream);
@@ -20,15 +21,24 @@ public static class GetNotice
         {
             doc = await web.LoadFromWebAsync("http://jwc.swjtu.edu.cn/vatuu/WebAction?setAction=newsList");
         }
-        catch (Exception e) when (e is System.Net.Http.HttpRequestException || e is System.Net.Sockets.SocketException)
+        catch (HttpRequestException)
         {
-            return (false, GetFileContent("JWC.txt"));
+            return (false, GetFileContentWithFault("JWC.txt"));
         }
-        HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='littleResultDiv']");
+        catch (SocketException)
+        {
+            return (false, GetFileContentWithFault("JWC.txt"));
+        }
+        catch (Exception)
+        {
+            return (false, GetFileContentWithFault("JWC.txt"));
+        }
+
+        HtmlNodeCollection? nodes = doc.DocumentNode.SelectNodes("//div[@class='littleResultDiv']");
 
         if (nodes == null)
         {
-            return (false, GetFileContent("JWC.txt"));
+            return (false, GetFileContentWithFault("JWC.txt"));
         }
 
         string baseUrl = "http://jwc.swjtu.edu.cn/";
@@ -45,6 +55,7 @@ public static class GetNotice
 
         return (true, result);
     }
+
     public async static Task<(bool success, string text)> GetNoticeFromSCAIAsync()
     {
         HtmlWeb web = new();
@@ -53,17 +64,26 @@ public static class GetNotice
         {
             doc = await web.LoadFromWebAsync("https://scai.swjtu.edu.cn/web/page-module.html?mid=B730BEB095B31840&tid=350");
         }
-        catch (Exception e) when (e is System.Net.Http.HttpRequestException || e is System.Net.Sockets.SocketException)
+        catch (HttpRequestException)
         {
-            return (false, GetFileContent("SCAI.txt"));
+            return (false, GetFileContentWithFault("SCAI.txt"));
         }
+        catch (SocketException)
+        {
+            return (false, GetFileContentWithFault("SCAI.txt"));
+        }
+        catch (Exception)
+        {
+            return (false, GetFileContentWithFault("SCAI.txt"));
+        }
+
         HtmlNodeCollection? nodes = doc.DocumentNode.SelectNodes("//div[@class='list-top-item fl']");
         HtmlNodeCollection? nodes1 = doc.DocumentNode.SelectNodes("//div[@class='list-top-item fr']");
         HtmlNodeCollection? normalNotice = doc.DocumentNode.SelectNodes("//div[@class='info-wrapper fl']");
 
         if (nodes == null || nodes1 == null || normalNotice == null)
         {
-            return (false, GetFileContent("SCAI.txt"));
+            return (false, GetFileContentWithFault("SCAI.txt"));
         }
 
         nodes.Append(nodes1[0]);
@@ -97,16 +117,24 @@ public static class GetNotice
         {
             doc = await web.LoadFromWebAsync("http://xg.swjtu.edu.cn/web/Home/PushNewsList?Lmk7LJw34Jmu=010j.shtml");
         }
-        catch (Exception e) when (e is System.Net.Http.HttpRequestException || e is System.Net.Sockets.SocketException)
+        catch (HttpRequestException)
         {
-            return (false, GetFileContent("XGB.txt"));
+            return (false, GetFileContentWithFault("XGB.txt"));
+        }
+        catch (SocketException)
+        {
+            return (false, GetFileContentWithFault("XGB.txt"));
+        }
+        catch (Exception)
+        {
+            return (false, GetFileContentWithFault("XGB.txt"));
         }
 
-        HtmlNodeCollection nodes = doc.DocumentNode.SelectNodes("//div[@class='right-side']//ul[@class='block-ctxlist']//li");
+        HtmlNodeCollection? nodes = doc.DocumentNode.SelectNodes("//div[@class='right-side']//ul[@class='block-ctxlist']//li");
 
         if (nodes == null)
         {
-            return (false, GetFileContent("XGB.txt"));
+            return (false, GetFileContentWithFault("XGB.txt"));
         }
 
         string baseUrl = "http://xg.swjtu.edu.cn/";
