@@ -34,7 +34,7 @@ namespace WinFormsApp1
             this.ActiveControl = null;
             string LoadingSymbol = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏";
             int i = 0;
-            Task<(bool success, string text)> task = GetNotice.GetNoticeFromJWCAsync();
+            Task<(bool success, string text)> task = GetNotice.GetNoticeFromJWCAsync(save: true);
 
             while (!task.IsCompleted)
             {
@@ -68,7 +68,7 @@ namespace WinFormsApp1
             this.ActiveControl = null;
             string LoadingSymbol = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏";
             int i = 0;
-            Task<(bool success, string text)> task = GetNotice.GetNoticeFromSCAIAsync();
+            Task<(bool success, string text)> task = GetNotice.GetNoticeFromSCAIAsync(save: true);
 
             while (!task.IsCompleted)
             {
@@ -101,7 +101,7 @@ namespace WinFormsApp1
             this.ActiveControl = null;
             string LoadingSymbol = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏";
             int i = 0;
-            Task<(bool success, string text)> task = GetNotice.GetNoticeFromXGBAsync();
+            Task<(bool success, string text)> task = GetNotice.GetNoticeFromXGBAsync(save: true);
 
             while (!task.IsCompleted)
             {
@@ -198,9 +198,9 @@ namespace WinFormsApp1
 
         private async void AutoRunTimer_Tick(object sender, EventArgs e)
         {
-            Task<(bool success, string text)> taskJWC = GetNotice.GetNoticeFromJWCAsync();
-            Task<(bool success, string text)> taskSCAI = GetNotice.GetNoticeFromSCAIAsync();
-            Task<(bool success, string text)> taskXGB = GetNotice.GetNoticeFromXGBAsync();
+            Task<(bool success, string text)> taskJWC = GetNotice.GetNoticeFromJWCAsync(save: false);
+            Task<(bool success, string text)> taskSCAI = GetNotice.GetNoticeFromSCAIAsync(save: false);
+            Task<(bool success, string text)> taskXGB = GetNotice.GetNoticeFromXGBAsync(save: false);
 
             await Task.WhenAll(taskJWC, taskSCAI, taskXGB);
 
