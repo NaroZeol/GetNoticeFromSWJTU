@@ -45,11 +45,10 @@
             // 
             // ButtonJWC
             // 
-            ButtonJWC.Font = new Font("Microsoft YaHei UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
-            ButtonJWC.Location = new Point(708, 634);
-            ButtonJWC.Margin = new Padding(4, 4, 4, 4);
+            ButtonJWC.Font = new Font("Microsoft YaHei UI", 20F);
+            ButtonJWC.Location = new Point(551, 539);
             ButtonJWC.Name = "ButtonJWC";
-            ButtonJWC.Size = new Size(150, 80);
+            ButtonJWC.Size = new Size(117, 68);
             ButtonJWC.TabIndex = 0;
             ButtonJWC.Text = "教务处";
             ButtonJWC.UseVisualStyleBackColor = true;
@@ -57,15 +56,25 @@
             // 
             // ButtonSCAI
             // 
-            ButtonSCAI.Font = new Font("Microsoft YaHei UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
-            ButtonSCAI.Location = new Point(914, 634);
-            ButtonSCAI.Margin = new Padding(4, 4, 4, 4);
+            ButtonSCAI.Font = new Font("Microsoft YaHei UI", 20F);
+            ButtonSCAI.Location = new Point(711, 539);
             ButtonSCAI.Name = "ButtonSCAI";
-            ButtonSCAI.Size = new Size(150, 80);
+            ButtonSCAI.Size = new Size(117, 68);
             ButtonSCAI.TabIndex = 2;
             ButtonSCAI.Text = "计院";
             ButtonSCAI.UseVisualStyleBackColor = true;
             ButtonSCAI.Click += ButtonSCAI_Click;
+            // 
+            // ButtonXGB
+            // 
+            ButtonXGB.Font = new Font("Microsoft YaHei UI", 20F);
+            ButtonXGB.Location = new Point(390, 539);
+            ButtonXGB.Name = "ButtonXGB";
+            ButtonXGB.Size = new Size(117, 68);
+            ButtonXGB.TabIndex = 4;
+            ButtonXGB.Text = "学工部";
+            ButtonXGB.UseVisualStyleBackColor = true;
+            ButtonXGB.Click += ButtonXGB_Click;
             // 
             // NoticeIcon
             // 
@@ -82,19 +91,19 @@
             NoticeMenu.ImageScalingSize = new Size(20, 20);
             NoticeMenu.Items.AddRange(new ToolStripItem[] { OpenWindowMenuBotton, ExitMenuBotton });
             NoticeMenu.Name = "contextMenuStrip1";
-            NoticeMenu.Size = new Size(109, 52);
+            NoticeMenu.Size = new Size(101, 48);
             // 
             // OpenWindowMenuBotton
             // 
             OpenWindowMenuBotton.Name = "OpenWindowMenuBotton";
-            OpenWindowMenuBotton.Size = new Size(108, 24);
+            OpenWindowMenuBotton.Size = new Size(100, 22);
             OpenWindowMenuBotton.Text = "打开";
             OpenWindowMenuBotton.Click += OpenWindowMenuBottom_Click;
             // 
             // ExitMenuBotton
             // 
             ExitMenuBotton.Name = "ExitMenuBotton";
-            ExitMenuBotton.Size = new Size(108, 24);
+            ExitMenuBotton.Size = new Size(100, 22);
             ExitMenuBotton.Text = "退出";
             ExitMenuBotton.Click += ExitProgram;
             // 
@@ -102,12 +111,11 @@
             // 
             MainRichTextBox.BackColor = SystemColors.Control;
             MainRichTextBox.BorderStyle = BorderStyle.None;
-            MainRichTextBox.Font = new Font("Microsoft YaHei UI", 15F, FontStyle.Regular, GraphicsUnit.Point);
-            MainRichTextBox.Location = new Point(15, 14);
-            MainRichTextBox.Margin = new Padding(4, 4, 4, 4);
+            MainRichTextBox.Font = new Font("Microsoft YaHei UI", 15F);
+            MainRichTextBox.Location = new Point(12, 12);
             MainRichTextBox.Name = "MainRichTextBox";
             MainRichTextBox.ReadOnly = true;
-            MainRichTextBox.Size = new Size(1625, 613);
+            MainRichTextBox.Size = new Size(1264, 521);
             MainRichTextBox.TabIndex = 3;
             MainRichTextBox.Text = "";
             MainRichTextBox.LinkClicked += MainRichTextBox_LinkClicked;
@@ -123,34 +131,20 @@
             AutoRunTimer.Interval = 30000;
             AutoRunTimer.Tick += AutoRunTimer_Tick;
             // 
-            // ButtonXGB
-            // 
-            ButtonXGB.Font = new Font("Microsoft YaHei UI", 20F, FontStyle.Regular, GraphicsUnit.Point);
-            ButtonXGB.Location = new Point(501, 634);
-            ButtonXGB.Margin = new Padding(4, 4, 4, 4);
-            ButtonXGB.Name = "ButtonXGB";
-            ButtonXGB.Size = new Size(150, 80);
-            ButtonXGB.TabIndex = 4;
-            ButtonXGB.Text = "学工部";
-            ButtonXGB.UseVisualStyleBackColor = true;
-            ButtonXGB.Click += ButtonXGB_Click;
-            // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(9F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             AutoSize = true;
             BackColor = SystemColors.Control;
             BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(1656, 728);
+            ClientSize = new Size(1288, 619);
             Controls.Add(ButtonXGB);
             Controls.Add(MainRichTextBox);
             Controls.Add(ButtonSCAI);
             Controls.Add(ButtonJWC);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(4, 4, 4, 4);
-            MaximizeBox = false;
             Name = "MainForm";
             Text = "GetNoticeFromSWJTU";
             TransparencyKey = Color.Transparent;
